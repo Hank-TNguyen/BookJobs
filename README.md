@@ -10,3 +10,4 @@ http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.h
 
 Target SDK will be 23 (6.0) or Marshmallow. 
 
+Build Tool version 24.0.1
