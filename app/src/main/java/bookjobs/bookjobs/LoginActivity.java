@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +29,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -296,8 +300,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
+        private static final String TAG = "SignInActivity";
+        private static final String DBTAG = "Database in Signin";
+
         private final String mEmail;
         private final String mPassword;
+        private DatabaseReference mDatabase;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -308,12 +316,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            Log.d(DBTAG, mDatabase.toString());
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
