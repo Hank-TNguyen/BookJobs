@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class User {
 
-
     private String uName;
     private String uID;
     private String uPassword;
