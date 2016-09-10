@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "899768368479",
+    "firebase_url": "https://bookjobs-6c56f.firebaseio.com",
+    "project_id": "bookjobs-6c56f",
+    "storage_bucket": "bookjobs-6c56f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899768368479:android:eadc06ffe8145e4d",
+        "android_client_info": {
+          "package_name": "bookjobs.bookjobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899768368479-ho5egeiui0de3urqpnqlshgnqgr2gtfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyGAv2hZgSg_3hKxLbwhYhkxP5uGdkLNk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
