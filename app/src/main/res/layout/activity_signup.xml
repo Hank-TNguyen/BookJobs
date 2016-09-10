@@ -32,13 +32,6 @@
                 android:layout_gravity="center_horizontal|center_vertical"/>
 
 
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="48dp"
-                android:gravity="right"
-                android:orientation="horizontal" >
-            </LinearLayout>
         </LinearLayout>
 
 
@@ -60,31 +53,35 @@
 
             <EditText android:layout_width="fill_parent"
                 android:layout_height="40dp"
+                android:hint="username/email"
+                android:background="#f3f3f3"
+                android:paddingLeft="5dp"
+                android:layout_marginTop="30dp"
+                android:id="@+id/signup_email"/>
+            <EditText android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:hint="password"
+                android:background="#f3f3f3"
+                android:paddingLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/signup_password"/>
+            <EditText android:layout_width="fill_parent"
+                android:layout_height="40dp"
                 android:hint="name"
                 android:background="#f3f3f3"
                 android:paddingLeft="5dp"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="15dp"
+                android:id="@+id/signup_name"/>
             <EditText android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:hint="email"
+                android:hint="age"
                 android:background="#f3f3f3"
                 android:paddingLeft="5dp"
                 android:layout_marginTop="15dp"/>
-            <EditText android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:hint="mobile"
-                android:background="#f3f3f3"
-                android:paddingLeft="5dp"
-                android:layout_marginTop="15dp"/>
+
             <EditText android:layout_width="fill_parent"
                 android:layout_height="40dp"
                 android:hint="address"
-                android:background="#f3f3f3"
-                android:paddingLeft="5dp"
-                android:layout_marginTop="15dp"/>
-            <EditText android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:hint="category"
                 android:background="#f3f3f3"
                 android:paddingLeft="5dp"
                 android:layout_marginTop="15dp"/>
@@ -95,7 +92,8 @@
                 android:layout_marginTop="16dp"
                 android:text="Sign Up"
                 android:textColor="#fff"
-                android:background="@drawable/btn"/>
+                android:background="@drawable/btn"
+                android:id="@+id/signup_submit_button"/>
 
         </LinearLayout>
 

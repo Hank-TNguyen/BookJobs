@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+    private static final int SIGNED_UP_USERNAME = 1;
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -104,12 +105,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View v) {
 
+                Intent signUpActivity = new Intent(LoginActivity.this, SignUpActivity.class);
+                signUpActivity.putExtra("username", mEmailView.toString());
+                startActivityForResult(signUpActivity,  SIGNED_UP_USERNAME);
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == SIGNED_UP_USERNAME && resultCode == RESULT_OK){
+            mEmailView.setText(data.getStringExtra("username"));
+            Toast.makeText(this, "signed up successfully", Toast.LENGTH_SHORT);
+        }
+        return;
     }
 
     private void populateAutoComplete() {
@@ -154,7 +166,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
     }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -323,7 +334,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
             mDatabase = FirebaseDatabase.getInstance().getReference();
             Log.d(DBTAG, mDatabase.toString());
