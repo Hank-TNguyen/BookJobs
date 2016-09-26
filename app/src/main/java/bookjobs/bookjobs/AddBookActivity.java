@@ -12,9 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.firebase.client.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,18 +33,23 @@ public class AddBookActivity extends AppCompatActivity {
     private static final String LOG_TAG = "Add Image-AddBook";
     private ViewGroup mLinearLayout;
     ImageButton insertPicture;
+    private Button mSubmitButton;
+    private FirebaseAuth mDatabaseAuth;
+    private FirebaseDatabase mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
 
         //set up wings
-        TextView isbnView = (TextView) findViewById(R.id.addbook_ISBN);
-        TextView titleView = (TextView) findViewById(R.id.addbook_title);
+        final TextView isbnView = (TextView) findViewById(R.id.addbook_ISBN);
+        final TextView titleView = (TextView) findViewById(R.id.addbook_title);
 //        TextView genreView
 
         mLinearLayout = (ViewGroup) findViewById(R.id.addbook_pictures_linear_layout);
         insertPicture = (ImageButton) findViewById(R.id.addbook_insert_picture);
+        mSubmitButton = (Button) findViewById(R.id.addbook_submit_button);
         insertPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +61,18 @@ public class AddBookActivity extends AppCompatActivity {
                         getString(R.string.select_picture));
                 chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {new Intent(MediaStore.ACTION_IMAGE_CAPTURE)});
                 startActivityForResult(chooser, SELECT_MULTIPLE_PICTURE);
+            }
+        });
+
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Book toUpload = new Book(isbnView.getText().toString(), titleView.getText().toString());
+
+//                mDatabaseAuth = getIntent().getParcelableExtra("userAuth");
+//                String userEmail = mDatabaseAuth.getCurrentUser().getEmail();
+                String userEmail = getIntent().getStringExtra("userAuth");
+                new BookController.UploadBookTask(toUpload, userEmail).execute();
             }
         });
     }

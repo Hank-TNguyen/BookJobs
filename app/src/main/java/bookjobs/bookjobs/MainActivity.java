@@ -2,6 +2,7 @@ package bookjobs.bookjobs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addBook = new Intent(MainActivity.this, AddBookActivity.class);
+                addBook.putExtra("userAuth", getIntent().getStringExtra("userAuth"));
                 startActivity(addBook);
+
             }
         });
     }
