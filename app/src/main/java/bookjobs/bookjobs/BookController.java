@@ -5,24 +5,17 @@ import android.util.Log;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by Hung on 9/12/2016.
  */
 public class BookController {
 
-    private DatabaseReference mDatabase;
-    private DatabaseReference mBooksDatabase;
-    private final String DBTAG = "DB in BookController";
+    private static DatabaseReference mDatabase;
+    private static DatabaseReference mBooksDatabase;
+    private static final String DBTAG = "DB in BookController";
     public BookController() {}
 
     /**
@@ -30,7 +23,7 @@ public class BookController {
      * That means to keep track of the owner, we need to update the users database in own
      *
      */
-    public class UploadBookTask extends AsyncTask<Void, Void, Boolean>{
+    public static class UploadBookTask extends AsyncTask<Void, Void, Boolean>{
         private Book mBook;
         private User mUser;
         private DatabaseReference mCurrentUser;
@@ -41,6 +34,7 @@ public class BookController {
             this.mUser = mUser;
         }
 
+
         @Override
         protected Boolean doInBackground(Void... params) {
             // Database Connection, if no connection or what not, exception will be here
@@ -49,7 +43,7 @@ public class BookController {
 
             // 'child database'
             mBooksDatabase = mDatabase.child("books");
-            mCurrentUser = mDatabase.child("users").child(mUser.getuEmail());
+            mCurrentUser = mDatabase.child("users").child(mUser.getEmail());
 
             // address to upload the book, later we can call newBookRef.getKey() to get the ID
             // and use the ID to indicate the relationship between the owner and the book
