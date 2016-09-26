@@ -90,13 +90,14 @@ public class BookController {
 
             Log.d(TAG, "Result: " + result);
             if (result!=null){
-                Toast.makeText(mActivity, "Your book has been uploaded successfully!", Toast.LENGTH_SHORT);
+                Toast.makeText(mActivity, "Your book has been uploaded successfully!", Toast.LENGTH_LONG).show();
+
                 //an UUID was returned for the book. this means upload was succeeded.
                 mActivity.uploadResult = result;
 
                 mActivity.finish();
             } else {
-                Toast.makeText(mActivity, "Failed to upload book!", Toast.LENGTH_SHORT);
+                Toast.makeText(mActivity, "Failed to upload book!", Toast.LENGTH_SHORT).show();
                 //otherwise...
             }
 
