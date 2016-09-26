@@ -17,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,8 +33,7 @@ public class AddBookActivity extends AppCompatActivity {
     private ViewGroup mLinearLayout;
     ImageButton insertPicture;
     private Button mSubmitButton;
-    private FirebaseAuth mDatabaseAuth;
-    private FirebaseDatabase mDatabase;
+    protected String uploadResult = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +70,7 @@ public class AddBookActivity extends AppCompatActivity {
 //                mDatabaseAuth = getIntent().getParcelableExtra("userAuth");
 //                String userEmail = mDatabaseAuth.getCurrentUser().getEmail();
                 String userEmail = getIntent().getStringExtra("userAuth");
-                new BookController.UploadBookTask(toUpload, userEmail).execute();
+                new BookController.UploadBookTask(AddBookActivity.this, toUpload, userEmail).execute();
             }
         });
     }
