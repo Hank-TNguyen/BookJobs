@@ -14,20 +14,48 @@ import java.util.ArrayList;
 public class User {
 
     private String uName;
-    private String uID;
-    private String uPassword;
+    // email is also the ID because of its uniqueness
+    private String uEmail;
     private String uBio;
     private String uAddress;
-    private ArrayList<String> uOwns;
-    private ArrayList<String> uInterested;
-    private ArrayList<String> uReviews;
-    private ArrayList<String> uTransaction;
 
     public User(){}
     //Default constructor required for calls to DataSnapshot.getValue(User.class)
 
-    public User(String uName, String uPassword) {
-        this.uName = uName;
-        this.uPassword = uPassword;
+    public User(String emailAddress) {
+        this.uEmail = emailAddress;
     }
+
+    public String getuName() {
+        return uName;
+    }
+
+    public void setuName(String uName) {
+        this.uName = uName;
+    }
+
+    public String getuEmail() {
+        return uEmail;
+    }
+
+    public void setuEmail(String uEmail) {
+        this.uEmail = uEmail;
+    }
+
+    public String getuBio() {
+        return uBio;
+    }
+
+    public void setuBio(String uBio) {
+        this.uBio = uBio;
+    }
+
+    public String getuAddress() {
+        return uAddress;
+    }
+
+    public void setuAddress(String uAddress) {
+        this.uAddress = uAddress;
+    }
+
 }
