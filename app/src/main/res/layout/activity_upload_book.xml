@@ -30,6 +30,13 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/book_isbn"
+                android:hint="ISBN"
+                android:layout_marginTop="15dp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/book_author"
                 android:hint="Author"
                 android:layout_marginTop="15dp" />
@@ -65,8 +72,19 @@
                     tools:ignore="contentDescription" />
 
             </LinearLayout>
+
+            <Button
+                android:layout_width="190dp"
+                android:layout_height="38dp"
+                android:text="Submit"
+                android:id="@+id/upload_book_btn"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/btn"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ffffff" />
+
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:orientation="vertical" >
 
@@ -86,16 +104,6 @@
                     android:background="@android:drawable/ic_menu_gallery" />
 
             </LinearLayout>
-
-            <Button
-                android:layout_width="190dp"
-                android:layout_height="38dp"
-                android:text="Submit"
-                android:id="@+id/upload_book_btn"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/btn"
-                android:layout_gravity="center_horizontal"
-                android:textColor="#ffffff" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
