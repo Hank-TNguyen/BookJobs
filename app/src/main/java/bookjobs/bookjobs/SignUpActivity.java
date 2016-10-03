@@ -132,11 +132,18 @@ public class SignUpActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
             mDatabase = FirebaseDatabase.getInstance().getReference();
-            mUserDatabase = mDatabase.child("users").child(mEmail);
-            mUserDatabase.setValue(new User(mEmail));
+            mUserDatabase = mDatabase.child("users").child(getUserFromEmail(mEmail));
+            mUserDatabase.setValue(new User(getUserFromEmail(mEmail)));
             Log.d(DBTAG, mDatabase.toString());
 
             return true;
+        }
+
+        private String getUserFromEmail(String email){
+            int indexOfAt = email.indexOf("@");
+            String userName = email.substring(0, indexOfAt);
+            Log.d(DBTAG, "The username from the email is: " + userName);
+            return userName;
         }
 
         @Override
