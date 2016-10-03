@@ -23,7 +23,7 @@
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign up"
+                android:text="Upload Book"
                 android:textColor="#2582C5"
                 android:layout_marginLeft="25dp"
                 android:textSize="18sp"
@@ -53,47 +53,72 @@
 
             <EditText android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:hint="username/email"
+                android:hint="ISBN number"
                 android:background="#f3f3f3"
                 android:paddingLeft="5dp"
                 android:layout_marginTop="30dp"
-                android:id="@+id/signup_email"/>
+                android:id="@+id/addbook_ISBN"/>
             <EditText android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:hint="password"
+                android:hint="title"
                 android:background="#f3f3f3"
                 android:paddingLeft="5dp"
                 android:layout_marginTop="15dp"
-                android:id="@+id/signup_password"/>
+                android:id="@+id/addbook_title"/>
             <EditText android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:hint="name"
+                android:hint="genre"
                 android:background="#f3f3f3"
                 android:paddingLeft="5dp"
                 android:layout_marginTop="15dp"
-                android:id="@+id/signup_name"/>
+                android:id="@+id/addbook_genre"/>
             <EditText android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:hint="age"
+                android:hint="field 1"
                 android:background="#f3f3f3"
                 android:paddingLeft="5dp"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="15dp"
+                android:id="@+id/addbook_" />
 
             <EditText android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:hint="address"
+                android:hint="field 2"
                 android:background="#f3f3f3"
                 android:paddingLeft="5dp"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="15dp"
+                android:id="@+id/addbook_2" />
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addbook_pictures_scroll_view" >
+                <LinearLayout
+                    android:id="@+id/addbook_pictures_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal" >
+                    <ImageButton
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:id="@+id/addbook_insert_picture"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/add_image_icon"/>
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+
+
 
             <Button android:layout_width="190dp"
                 android:layout_height="38dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
-                android:text="Sign Up"
+                android:text="Submit"
                 android:textColor="#fff"
                 android:background="@drawable/btn"
-                android:id="@+id/signup_submit_button"/>
+                android:id="@+id/addbook_submit_button"/>
 
         </LinearLayout>
 

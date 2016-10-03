@@ -121,6 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
         private final String DBTAG = "Database in SIGNUP";
         private final String TAG = "SIGNUP TASK";
         private final String FAIL_TAG = "SIGNUP Failed";
+        private DatabaseReference mUserDatabase;
 
         UserSignUpTask(String email, String password) {
             mEmail = email;
@@ -131,6 +132,8 @@ public class SignUpActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
             mDatabase = FirebaseDatabase.getInstance().getReference();
+            mUserDatabase = mDatabase.child("users").child(mEmail);
+            mUserDatabase.setValue(new User(mEmail));
             Log.d(DBTAG, mDatabase.toString());
 
             return true;
