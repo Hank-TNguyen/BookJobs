@@ -17,4 +17,5 @@
     </string>
     <string name="title_activity_main">Find Your Book!</string>
     <string name="title_activity_login_activity_temp">Sign in</string>
+    <string name="select_picture">Select Picture</string>
 </resources>

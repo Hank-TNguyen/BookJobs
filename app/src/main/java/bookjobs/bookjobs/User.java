@@ -1,8 +1,5 @@
 package bookjobs.bookjobs;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 /**
  * Created by Hung on 9/8/2016.
  * User class for BookJobs app, this contains the basic particulars of the users
@@ -13,49 +10,54 @@ import java.util.ArrayList;
  */
 public class User {
 
-    private String uName;
+    private String Name;
     // email is also the ID because of its uniqueness
-    private String uEmail;
-    private String uBio;
-    private String uAddress;
+    private String Email;
+    private String Bio;
+    private String Address;
 
     public User(){}
     //Default constructor required for calls to DataSnapshot.getValue(User.class)
 
     public User(String emailAddress) {
-        this.uEmail = emailAddress;
+        this.Email = emailAddress;
     }
 
-    public String getuName() {
-        return uName;
+    public User(String name, String email) {
+        Name = name;
+        Email = email;
     }
 
-    public void setuName(String uName) {
-        this.uName = uName;
+    public String getName() {
+        return Name;
     }
 
-    public String getuEmail() {
-        return uEmail;
+    public void setName(String name) {
+        this.Name = name;
     }
 
-    public void setuEmail(String uEmail) {
-        this.uEmail = uEmail;
+    public String getEmail() {
+        return Email;
     }
 
-    public String getuBio() {
-        return uBio;
+    public void setEmail(String email) {
+        this.Email = email;
     }
 
-    public void setuBio(String uBio) {
-        this.uBio = uBio;
+    public String getBio() {
+        return Bio;
     }
 
-    public String getuAddress() {
-        return uAddress;
+    public void setBio(String bio) {
+        this.Bio = bio;
     }
 
-    public void setuAddress(String uAddress) {
-        this.uAddress = uAddress;
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        this.Address = address;
     }
 
 }

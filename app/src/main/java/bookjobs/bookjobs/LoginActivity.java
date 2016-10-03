@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -81,6 +82,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
+
+
+        //TODO: DELETE THESE AFTER DEBUGGING
+        mEmailView.setText("Hankemail@gmail.com");
+        mPasswordView.setText("123456");
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -119,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == SIGNED_UP_USERNAME && resultCode == RESULT_OK){
             mEmailView.setText(data.getStringExtra("username"));
-            Toast.makeText(this, "signed up successfully", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "signed up successfully", Toast.LENGTH_SHORT).show();
         }
         return;
     }
@@ -375,7 +382,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             // Go to MainActivity
             Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
-            goToMain.putExtra("user", username);
+            goToMain.putExtra("userAuth", username);
 
             startActivity(goToMain);
             finish();
