@@ -96,8 +96,7 @@ public class UploadBookActivity extends AppCompatActivity {
 
         //Still have to figure out how to get current user.
 
-
-        mAuthTask = new BookController().new UploadBookTask(newBook,currentUser);
-        mAuthTask.execute((Void) null);
+//        mAuthTask = new BookController.UploadBookTask();
+//        mAuthTask.execute((Void) null);
     }
 }
