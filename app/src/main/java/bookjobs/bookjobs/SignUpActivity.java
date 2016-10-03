@@ -199,7 +199,8 @@ public class SignUpActivity extends AppCompatActivity {
             // go back to Login activity
             Intent backToLogin = new Intent();
             backToLogin.putExtra("username", user.getEmail());
-            setResult(SIGNED_UP_USERNAME, backToLogin);
+            Toast.makeText(SignUpActivity.this, "Signed up has been successful!", Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK, backToLogin);
             finish();
         }
 

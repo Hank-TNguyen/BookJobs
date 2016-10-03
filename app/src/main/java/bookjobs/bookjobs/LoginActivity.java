@@ -124,9 +124,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        Log.d(TAG, "Return from SignUpActivity, requestCode: " + String.valueOf(requestCode)
+                    + ". resultCode: " + String.valueOf(resultCode));
         if(requestCode == SIGNED_UP_USERNAME && resultCode == RESULT_OK){
-            mEmailView.setText(data.getStringExtra("username"));
-            Toast.makeText(this, "signed up successfully", Toast.LENGTH_SHORT).show();
+            if (data != null){
+                mEmailView.setText(data.getStringExtra("username"));
+            }
         }
         return;
     }
