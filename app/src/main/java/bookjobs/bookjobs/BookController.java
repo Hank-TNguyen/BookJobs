@@ -95,6 +95,7 @@ public class BookController {
                 //an UUID was returned for the book. this means upload was succeeded.
                 mActivity.uploadResult = result;
 
+                //we can do more productive things here, e.g.
                 mActivity.finish();
             } else {
                 Toast.makeText(mActivity, "Failed to upload book!", Toast.LENGTH_SHORT).show();

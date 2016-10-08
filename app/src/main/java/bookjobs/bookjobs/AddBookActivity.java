@@ -57,6 +57,7 @@ public class AddBookActivity extends AppCompatActivity {
                 intentGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 Intent chooser = Intent.createChooser(intentGallery,
                         getString(R.string.select_picture));
+                //TODO: the gallery still returns null for some reasons
                 chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {new Intent(MediaStore.ACTION_IMAGE_CAPTURE)});
                 startActivityForResult(chooser, SELECT_MULTIPLE_PICTURE);
             }
