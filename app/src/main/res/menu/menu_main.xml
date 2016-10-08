@@ -7,4 +7,11 @@
         android:orderInCategory="100"
         android:title="Settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/addListingMenu"
+        android:title="Bluetooth"
+        android:icon="@drawable/addlistingicon"
+        app:showAsAction="always">
+    </item>
 </menu>
