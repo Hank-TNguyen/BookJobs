@@ -16,6 +16,17 @@ public class User {
     private String Bio;
     private String Address;
 
+    public bookjobs.bookjobs.Address getLocation() {
+        return location;
+    }
+
+    public void setLocation(bookjobs.bookjobs.Address location) {
+        this.location = location;
+    }
+
+    private Address location;
+
+
     public User(){}
     //Default constructor required for calls to DataSnapshot.getValue(User.class)
 
