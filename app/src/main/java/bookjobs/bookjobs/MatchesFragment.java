@@ -1,11 +1,13 @@
 package bookjobs.bookjobs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,23 +36,48 @@ public class MatchesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_matches, container,
                 false);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         Book book = new Book("1234", "Life of Pi", "Mr. Richard Williams", "Philosophy");
         User user1 = new User("John", "john@gmail.com","Loves travelling", "Singapore", new Address(10.12,17.32));
         User user2 = new User("Tay", "tay@gmail.com","Loves food", "New York", new Address(-10.12,17.32));
         Match first = new Match(book,user1, user2, new Date(2016,05,15),false,false);
 
-        List<Match> matchList = new ArrayList<>();
+        final List<Match> matchList = new ArrayList<>();
         matchList.add(first);
 
-        MatchRecyclerAdapter matchRecyclerAdapter = new MatchRecyclerAdapter(matchList);
+        MatchRecyclerAdapter matchRecyclerAdapter = new MatchRecyclerAdapter(matchList,getContext());
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(matchRecyclerAdapter);
+        recyclerView.addOnItemTouchListener(new RecyclerViewItemTouchListener(getContext(), new RecyclerViewItemTouchListener.OnItemClickEventListener() {
+            @Override
+            public void onItemLongClick(View longClickedView, int adapterPosition) {
+
+            }
+
+            @Override
+            public void onItemClick(View clickedView, int adapterPosition) {
+                launchDetail(matchList.get(adapterPosition));
+            }
+
+            @Override
+            public void onItemDoubleClick(View doubleClickedView, int adapterPosition) {
+
+            }
+        }));
 
         return rootView;
     }
+
+    public void launchDetail(Match match)
+    {
+        Intent intent = new Intent(getContext(),MatchDetailActivity.class);
+        intent.putExtra("match",match);
+        startActivity(intent);
+
+    }
+
 }

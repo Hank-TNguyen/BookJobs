@@ -30,6 +30,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".AddBookActivity"></activity>
+        <activity android:name=".MatchDetailActivity"></activity>
     </application>
 
 </manifest>

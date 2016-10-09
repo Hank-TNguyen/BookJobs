@@ -1,10 +1,12 @@
 package bookjobs.bookjobs;
 
+import java.io.Serializable;
+
 /**
  * Created by Hung on 9/10/2016.
  *
  */
-public class Book {
+public class Book implements Serializable {
     private String mTitle;
     private String mISBN;
     private String mAuthor;
