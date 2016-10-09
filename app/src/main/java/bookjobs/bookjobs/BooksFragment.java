@@ -69,7 +69,8 @@ public class BooksFragment extends Fragment {
 
     public void loadNewBook(){
         if (clickcounter==0) {
-            String uri = "@drawable/book1.jpg";
+
+            String uri = "@drawable/book1";
             int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
             Drawable res = getResources().getDrawable(imageResource);
             ivbook.setImageDrawable(res);
@@ -78,7 +79,7 @@ public class BooksFragment extends Fragment {
         }
 
         else if (clickcounter==1) {
-            String uri = "@drawable/book2.jpg";
+            String uri = "@drawable/book2";
             int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
             Drawable res = getResources().getDrawable(imageResource);
             ivbook.setImageDrawable(res);
@@ -87,7 +88,7 @@ public class BooksFragment extends Fragment {
         }
 
         else if (clickcounter==2) {
-            String uri = "@drawable/book3.jpg";
+            String uri = "@drawable/book3";
             int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
             Drawable res = getResources().getDrawable(imageResource);
             ivbook.setImageDrawable(res);
@@ -96,12 +97,66 @@ public class BooksFragment extends Fragment {
         }
 
         else if (clickcounter==3) {
-            String uri = "@drawable/book4.jpg";
+            String uri = "@drawable/book4";
             int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
             Drawable res = getResources().getDrawable(imageResource);
             ivbook.setImageDrawable(res);
             bookTitle.setText("Blooming Business");
             author.setText("Alessia Patterson");
+        }
+
+        else if (clickcounter==4) {
+            String uri = "@drawable/book5";
+            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
+            Drawable res = getResources().getDrawable(imageResource);
+            ivbook.setImageDrawable(res);
+            bookTitle.setText("Life Plan");
+            author.setText("Michael Hyatt");
+        }
+
+        else if (clickcounter==5) {
+            String uri = "@drawable/book6";
+            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
+            Drawable res = getResources().getDrawable(imageResource);
+            ivbook.setImageDrawable(res);
+            bookTitle.setText("Eleven Minutes");
+            author.setText("Paul Coelho");
+        }
+
+        else if (clickcounter==6) {
+            String uri = "@drawable/book7";
+            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
+            Drawable res = getResources().getDrawable(imageResource);
+            ivbook.setImageDrawable(res);
+            bookTitle.setText("For One More Day");
+            author.setText("Mitch Albom");
+        }
+
+        else if (clickcounter==7) {
+            String uri = "@drawable/book8";
+            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
+            Drawable res = getResources().getDrawable(imageResource);
+            ivbook.setImageDrawable(res);
+            bookTitle.setText("Adventures of Huckleberry Finn");
+            author.setText("Mark Twain");
+        }
+
+        else if (clickcounter==8) {
+            String uri = "@drawable/book9";
+            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
+            Drawable res = getResources().getDrawable(imageResource);
+            ivbook.setImageDrawable(res);
+            bookTitle.setText("The Girl's Playground");
+            author.setText("Alexandria Jackson");
+        }
+
+        else if (clickcounter==9) {
+            String uri = "@drawable/book10";
+            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
+            Drawable res = getResources().getDrawable(imageResource);
+            ivbook.setImageDrawable(res);
+            bookTitle.setText("The Railway Children");
+            author.setText("E.Nesbit");
         }
 
         clickcounter++;
