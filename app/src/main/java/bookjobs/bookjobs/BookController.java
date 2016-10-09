@@ -93,6 +93,7 @@ public class BookController {
                 mActivity.uploadResult = result;
                 completeListener.onSuccess();
 
+
             } else {
                 completeListener.onFail();
                 //otherwise...
@@ -103,7 +104,8 @@ public class BookController {
     public static void updateBookPicture(Uri uri, String bookRef){
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mBooksDatabase = mDatabase.child("books").child(bookRef);
-        mBooksDatabase.child("photos").setValue(uri);
+        final DatabaseReference newPhoto = mBooksDatabase.child("photos").push();
+        newPhoto.setValue(uri);
     }
 
 }
