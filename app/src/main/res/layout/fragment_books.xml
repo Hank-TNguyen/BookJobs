@@ -13,7 +13,7 @@
     <ImageView
         android:layout_width="1000px"
         android:layout_height="800px"
-        app:srcCompat="@drawable/bookcover"
+        android:src="@drawable/bookcover"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="30px"
@@ -33,7 +33,7 @@
         android:id="@+id/tvBookTitle"
         android:fontFamily="casual"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="normal|bold" />
 
     <TextView
@@ -45,11 +45,11 @@
         android:id="@+id/tvBookAuthor"
         android:fontFamily="casual"
         android:textColor="@android:color/black"
-        android:textSize="20sp"/>
+        android:textSize="15sp"/>
 
     <ImageButton
-        android:layout_width="400px"
-        android:layout_height="400px"
+        android:layout_width="300px"
+        android:layout_height="300px"
         app:srcCompat="@drawable/crossbtn"
         android:id="@+id/btnCross"
         android:adjustViewBounds="true"
@@ -62,8 +62,8 @@
         android:layout_marginLeft="20px"/>
 
     <ImageButton
-        android:layout_width="400px"
-        android:layout_height="400px"
+        android:layout_width="300px"
+        android:layout_height="300px"
         app:srcCompat="@drawable/heartbtn"
         android:id="@+id/btnHeart"
         android:adjustViewBounds="true"
@@ -71,7 +71,7 @@
         android:padding="1dp"
         android:scaleType="fitCenter"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="80px"
+        android:layout_marginStart="170px"
         android:layout_below="@+id/tvBookAuthor"
         />
 
