@@ -13,6 +13,16 @@ public class Match {
     boolean ownerStatus;
     boolean wanterStatus;
 
+    public Match(Book book, User userWants, User userOwns, Date dateOfMatch, boolean ownerStatus, boolean wanterStatus)
+    {
+        this.book = book;
+        this.userWants = userWants;
+        this.userOwns = userOwns;
+        this.dateOfMatch = dateOfMatch;
+        this.ownerStatus = ownerStatus;
+        this.wanterStatus = wanterStatus;
+    }
+
     public double getDistance() {
         return distance;
     }

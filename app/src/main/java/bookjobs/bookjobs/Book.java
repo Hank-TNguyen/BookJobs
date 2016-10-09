@@ -15,6 +15,13 @@ public class Book {
         this.mTitle = mTitle;
     }
 
+    public Book(String mISBN, String mTitle, String mAuthor, String mGenre) {
+        this.mISBN = mISBN;
+        this.mTitle = mTitle;
+        this.mAuthor = mAuthor;
+        this.mGenre = mGenre;
+    }
+
     public String getmTitle() {
         return mTitle;
     }
