@@ -48,13 +48,7 @@ public class MainActivity extends AppCompatActivity {
      */
 
     // CHEE TENG ATTRIBUTES
-    TextView bookTitle;
-    TextView author;
-    ImageButton btnHeart;
-    ImageButton btnCross;
-    ImageView ivbook;
-
-    int clickcounter = 0;
+    public static String PACKAGE_NAME;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -67,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        PACKAGE_NAME = getApplicationContext().getPackageName();
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
@@ -83,25 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        // CHEE TENG CODE
-        ivbook = (ImageView)findViewById(R.id.ivBook);
-        btnHeart = (ImageButton)findViewById(R.id.btnHeart);
-        btnCross = (ImageButton)findViewById(R.id.btnCross);
-        author = (TextView)findViewById(R.id.tvBookAuthor);
-        bookTitle = (TextView)findViewById(R.id.tvBookTitle);
-
-        btnHeart.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                loadNewBook();
-            }
-        });
-
-        btnCross.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                loadNewBook();
-            }
-        });
 
     }
 
@@ -173,47 +148,5 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
-    }
-
-    //------------------------------------CHEE TENG METHODS-------------------------------//
-
-    public void loadNewBook(){
-        if (clickcounter==0) {
-            String uri = "@drawable/book1.jpg";
-            int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("Enchantment");
-            author.setText("Guy Kawasaki");
-        }
-
-        else if (clickcounter==1) {
-            String uri = "@drawable/book2.jpg";
-            int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("The Last Wild");
-            author.setText("Piers Torday");
-        }
-
-        else if (clickcounter==2) {
-            String uri = "@drawable/book3.jpg";
-            int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("Boring Girls");
-            author.setText("Sara Taylor");
-        }
-
-        else if (clickcounter==3) {
-            String uri = "@drawable/book4.jpg";
-            int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("Blooming Business");
-            author.setText("Alessia Patterson");
-        }
-
-        clickcounter++;
     }
 }
