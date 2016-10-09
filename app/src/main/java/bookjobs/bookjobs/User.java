@@ -1,5 +1,7 @@
 package bookjobs.bookjobs;
 
+import android.location.Location;
+
 /**
  * Created by Hung on 9/8/2016.
  * User class for BookJobs app, this contains the basic particulars of the users
@@ -37,6 +39,14 @@ public class User {
     public User(String name, String email) {
         Name = name;
         Email = email;
+    }
+
+    public User(String name, String email, String bio, String address, Address location) {
+        Name = name;
+        Email = email;
+        Bio = bio;
+        Address = address;
+        this.location = location;
     }
 
     public String getName() {
