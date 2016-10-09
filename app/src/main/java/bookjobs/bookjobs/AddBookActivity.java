@@ -34,6 +34,7 @@ public class AddBookActivity extends AppCompatActivity {
     ImageButton insertPicture;
     private Button mSubmitButton;
     protected String uploadResult = null;
+    private ArrayList<Uri> picturesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class AddBookActivity extends AppCompatActivity {
         mLinearLayout = (ViewGroup) findViewById(R.id.addbook_pictures_linear_layout);
         insertPicture = (ImageButton) findViewById(R.id.addbook_insert_picture);
         mSubmitButton = (Button) findViewById(R.id.addbook_submit_button);
+
+        // add image to upload
         insertPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +88,7 @@ public class AddBookActivity extends AppCompatActivity {
             if(requestCode==SELECT_MULTIPLE_PICTURE){
                 Log.d(LOG_TAG, "The requeste code is: " + String.valueOf(requestCode==SELECT_MULTIPLE_PICTURE));
                 Log.d(LOG_TAG, "Action type is: " + String.valueOf(data.getAction()));
-                if (Intent.ACTION_SEND_MULTIPLE.equals(data.getAction())
+                if (Intent.ACTION_SEND_MULTIPLE == data.getAction()
                         && data.hasExtra(Intent.EXTRA_STREAM)) {
                     // retrieve a collection of selected images
                     ArrayList<Parcelable> list = data.getParcelableArrayListExtra(Intent.EXTRA_STREAM);

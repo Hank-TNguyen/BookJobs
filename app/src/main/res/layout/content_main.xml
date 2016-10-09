@@ -69,10 +69,8 @@
         android:background="@android:color/white"
         android:padding="1dp"
         android:scaleType="fitCenter"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="300px"
-        android:layout_below="@+id/tvBookAuthor"
-        />
+        android:layout_alignBottom="@+id/tvBookAuthor"
+        android:layout_toEndOf="@+id/tvBookAuthor" />
 
     <ImageView
         android:layout_width="150px"
@@ -104,4 +102,6 @@
         android:layout_marginTop="7dp"
         android:layout_marginStart="10dp"
         android:visibility="invisible"/>
+
+
 </RelativeLayout>
