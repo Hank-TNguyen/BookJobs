@@ -9,6 +9,8 @@ public class Book {
     private String mISBN;
     private String mAuthor;
     private String mGenre;
+    private String picURL;
+    private int noOfLikes;
 
     public Book(String mISBN, String mTitle) {
         this.mISBN = mISBN;
@@ -20,6 +22,15 @@ public class Book {
         this.mTitle = mTitle;
         this.mAuthor = mAuthor;
         this.mGenre = mGenre;
+    }
+
+    public Book(String mISBN, String mTitle, String mAuthor, String mGenre, String picURL, int noOfLikes){
+        this.mISBN = mISBN;
+        this.mTitle = mTitle;
+        this.mAuthor = mAuthor;
+        this.mGenre = mGenre;
+        this.picURL = picURL;
+        this.noOfLikes = noOfLikes;
     }
 
     public String getmTitle() {
@@ -52,5 +63,21 @@ public class Book {
 
     public void setmGenre(String mGenre) {
         this.mGenre = mGenre;
+    }
+
+    public int getNoOfLikes() {
+        return noOfLikes;
+    }
+
+    public void setNoOfLikes(int noOfLikes) {
+        this.noOfLikes = noOfLikes;
+    }
+
+    public String getPicURL() {
+        return picURL;
+    }
+
+    public void setPicURL(String picURL) {
+        this.picURL = picURL;
     }
 }
