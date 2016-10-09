@@ -1,17 +1,15 @@
 package bookjobs.bookjobs;
 
-import android.nfc.Tag;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * Created by Hung on 9/12/2016.
@@ -34,13 +32,17 @@ public class BookController {
         private DatabaseReference mCurrentUser;
         final String OWN_LIST = "uOwns";
         private AddBookActivity mActivity;
+        private ArrayList<Uri> pictures;
+        private UploadCompleteListener completeListener;
         static String bookRef = null;
         private static final String TAG = "UPLOAD_RESULT";
 
-        public UploadBookTask(AddBookActivity activity, Book mBook, String mUser) {
+        public UploadBookTask(AddBookActivity activity, UploadCompleteListener mCompleteListener, Book mBook, String mUser, ArrayList<Uri> picturesList) {
             this.mBook = mBook;
             this.mUserEmail = mUser;
+            this.completeListener = mCompleteListener;
             this.mActivity = activity;
+            this.pictures = picturesList;
         }
 
 
@@ -58,11 +60,7 @@ public class BookController {
             // and use the ID to indicate the relationship between the owner and the book
             final DatabaseReference newBookRef = mBooksDatabase.push();
             try {
-                Map<String, String> mBookTest = new HashMap<String, String>();
-                mBookTest.put("ISBN", "9781566199094");
-                mBookTest.put("title", "Book of Love");
-                //TODO: edit this so that it actually uploads what's on the screen
-                newBookRef.setValue(mBookTest, new DatabaseReference.CompletionListener() {
+                newBookRef.setValue(mBook, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                         if (databaseError != null) {
@@ -71,8 +69,10 @@ public class BookController {
                             Log.d(DBTAG, "Data saved successfully.");
                             // update the 'owns' list in user's data
                             bookRef = newBookRef.getKey();
+                            onResult(bookRef);
                             Log.d(DBTAG, "Data saved successfully. bookRef = " + bookRef);
                             mCurrentUser.child("owns").child(bookRef).setValue("1");
+
                             //TODO: we can use this to count how many of the same books an user has
                         }
                     }
@@ -80,28 +80,30 @@ public class BookController {
             } catch (DatabaseException e){
                 Log.e(DBTAG, "Error occurred", e);
             }
+
             // if owner is desired in book, we can modify this part
             return bookRef;
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
 
-            Log.d(TAG, "Result: " + result);
+        protected void onResult(String result) {
+            Log.d(TAG, "Book Reference: " + result);
             if (result!=null){
-                Toast.makeText(mActivity, "Your book has been uploaded successfully!", Toast.LENGTH_LONG).show();
-
                 //an UUID was returned for the book. this means upload was succeeded.
                 mActivity.uploadResult = result;
+                completeListener.onSuccess();
 
-                //we can do more productive things here, e.g.
-                mActivity.finish();
             } else {
-                Toast.makeText(mActivity, "Failed to upload book!", Toast.LENGTH_SHORT).show();
+                completeListener.onFail();
                 //otherwise...
             }
-
         }
     }
+
+    public static void updateBookPicture(Uri uri, String bookRef){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mBooksDatabase = mDatabase.child("books").child(bookRef);
+        mBooksDatabase.child("photos").setValue(uri);
+    }
+
 }
