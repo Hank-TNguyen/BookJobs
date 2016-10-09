@@ -3,12 +3,15 @@ package bookjobs.bookjobs.ImageUploader;
 /**
  * Copied by Hung on 10/9/2016.
  */
+import android.annotation.TargetApi;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +27,7 @@ import com.google.firebase.storage.UploadTask;
 
 import bookjobs.bookjobs.BookController;
 import bookjobs.bookjobs.MainActivity;
+import bookjobs.bookjobs.Manifest;
 import bookjobs.bookjobs.R;
 
 /**
@@ -79,6 +83,7 @@ public class MyUploadService extends MyBaseTaskService {
     }
 
     // [START upload_from_uri]
+    @TargetApi(Build.VERSION_CODES.M)
     private void uploadFromUri(final Uri fileUri) {
         Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
@@ -95,6 +100,8 @@ public class MyUploadService extends MyBaseTaskService {
 
         // Upload file to Firebase Storage
         Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
+        // Here, thisActivity is the current activity
+
         photoRef.putFile(fileUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
