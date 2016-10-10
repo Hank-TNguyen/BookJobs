@@ -157,6 +157,7 @@ public class BooksFragment extends Fragment {
             ivbook.setImageDrawable(res);
             bookTitle.setText("The Railway Children");
             author.setText("E.Nesbit");
+            clickcounter = 0;
         }
 
         clickcounter++;

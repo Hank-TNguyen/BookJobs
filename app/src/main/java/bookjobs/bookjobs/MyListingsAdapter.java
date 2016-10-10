@@ -58,6 +58,12 @@ public class MyListingsAdapter extends ArrayAdapter<Book> {
         Drawable image1 = context.getResources().getDrawable(imageResource1);
         heartPic.setImageDrawable(image1);
 
+        TextView availability = (TextView) convertView.findViewById(R.id.tvNotAvailable);
+        if (!book.isAvailability()){
+            availability.setVisibility(View.VISIBLE);
+        }
+
+
 
         return convertView;
     }

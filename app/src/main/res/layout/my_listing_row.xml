@@ -58,4 +58,19 @@
         android:padding="1dp"
         android:scaleType="fitCenter"
         android:layout_alignBottom="@+id/noOfLikes" />
+
+    <TextView
+        android:text="Traded/Sold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220px"
+        android:layout_marginLeft="20px"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/bookPic"
+        android:id="@+id/tvNotAvailable"
+        android:visibility="invisible"
+        android:fontFamily="casual"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"/>
 </RelativeLayout>

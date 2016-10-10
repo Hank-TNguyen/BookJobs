@@ -12,6 +12,7 @@ public class Book implements Serializable {
     private String mAuthor;
     private String mGenre;
     private String picURL;
+    private boolean availability;
     private int noOfLikes;
 
     public Book(String mISBN, String mTitle) {
@@ -26,13 +27,14 @@ public class Book implements Serializable {
         this.mGenre = mGenre;
     }
 
-    public Book(String mISBN, String mTitle, String mAuthor, String mGenre, String picURL, int noOfLikes){
+    public Book(String mISBN, String mTitle, String mAuthor, String mGenre, String picURL, int noOfLikes, boolean availability){
         this.mISBN = mISBN;
         this.mTitle = mTitle;
         this.mAuthor = mAuthor;
         this.mGenre = mGenre;
         this.picURL = picURL;
         this.noOfLikes = noOfLikes;
+        this.availability = availability;
     }
 
     public String getmTitle() {
@@ -81,5 +83,12 @@ public class Book implements Serializable {
 
     public void setPicURL(String picURL) {
         this.picURL = picURL;
+    }
+    public boolean isAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
     }
 }
