@@ -64,6 +64,18 @@
             android:textSize="15sp"
             android:layout_marginTop="10px"
             android:textStyle="normal|bold" />
+
+        <ImageButton
+            android:layout_width="300px"
+            android:layout_height="100px"
+            app:srcCompat="@drawable/new_listing_button"
+            android:adjustViewBounds="true"
+            android:background="@android:color/white"
+            android:padding="1dp"
+            android:scaleType="fitCenter"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="190px"
+            android:id="@+id/newListingbtn" />
     </RelativeLayout>
 
     <TextView

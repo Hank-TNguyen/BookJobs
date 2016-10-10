@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -39,19 +40,28 @@ public class ProfileFragment extends Fragment {
 
         ctx=getActivity().getApplicationContext();
         List<Book> bookList = new ArrayList<Book>();
-        bookList.add(new Book("asd", "PS I Love You", "Cecelia Ahern", "Love", "profilebook", 42));
-        bookList.add(new Book("asd", "The Da Vinci Code", "Dan Brown", "Mystery", "davinci", 65));
-        bookList.add(new Book("asd", "For One More Day", "Mitch Albom", "Novel", "book7", 28));
-        bookList.add(new Book("asd", "The Girl's Playground", "Alexandria Jackson", "Novel", "book9", 5));
+        bookList.add(new Book("asd", "PS I Love You", "Cecelia Ahern", "Love", "profilebook", 42, true));
+        bookList.add(new Book("asd", "The Da Vinci Code", "Dan Brown", "Mystery", "davinci", 65, true));
+        bookList.add(new Book("asd", "For One More Day", "Mitch Albom", "Novel", "book7", 28, true));
+        bookList.add(new Book("asd", "The Girl's Playground", "Alexandria Jackson", "Novel", "book9", 5, false));
 
         lvBook = (ListView)rootView.findViewById(R.id.lvListings);
         lvBook.setAdapter(new MyListingsAdapter(ctx, R.layout.my_listing_row, bookList));
 
+        /*
         lvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Book o = (Book) parent.getItemAtPosition(position);
                 Toast.makeText(ctx, o.getmTitle().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+        ImageButton addNewListing = (ImageButton)rootView.findViewById(R.id.newListingbtn);
+        addNewListing.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(ctx, "LINK TO ADD NEW BOOK PAGE", Toast.LENGTH_SHORT).show();
             }
         });
 
