@@ -9,4 +9,100 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
+
+    <ImageView
+        android:layout_width="1000px"
+        android:layout_height="800px"
+        app:srcCompat="@drawable/bookcover"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="45px"
+        android:layout_marginTop="7dp"
+        android:id="@+id/ivBook"
+        android:scaleType="fitCenter"
+        android:padding="1px" />
+
+    <TextView
+        android:text="The Humane Interface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivBook"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="26dp"
+        android:id="@+id/tvBookTitle"
+        android:fontFamily="casual"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="Jeft Raskin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBookTitle"
+        android:layout_alignStart="@+id/tvBookTitle"
+        android:id="@+id/tvBookAuthor"
+        android:fontFamily="casual"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        app:srcCompat="@drawable/crossbtn"
+        android:id="@+id/btnCross"
+        android:adjustViewBounds="true"
+        android:background="@android:color/white"
+        android:padding="1dp"
+        android:scaleType="fitCenter"
+        android:layout_marginStart="31dp"
+        android:layout_alignTop="@+id/btnHeart"
+        android:layout_toRightOf="@id/btnHeart"
+        android:layout_marginLeft="20px"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        app:srcCompat="@drawable/heartbtn"
+        android:id="@+id/btnHeart"
+        android:adjustViewBounds="true"
+        android:background="@android:color/white"
+        android:padding="1dp"
+        android:scaleType="fitCenter"
+        android:layout_alignBottom="@+id/tvBookAuthor"
+        android:layout_toEndOf="@+id/tvBookAuthor" />
+
+    <ImageView
+        android:layout_width="150px"
+        android:layout_height="150px"
+        app:srcCompat="@drawable/swipearrow"
+        android:id="@+id/imageView5"
+        android:adjustViewBounds="true"
+        android:background="@android:color/white"
+        android:padding="1dp"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="7dp"
+        android:layout_alignTop="@+id/btnCross"
+        android:layout_alignEnd="@+id/ivBook"
+        android:layout_marginEnd="10dp"
+        android:visibility="invisible"/>
+
+    <ImageButton
+        android:layout_width="150px"
+        android:layout_height="150px"
+        app:srcCompat="@drawable/swipearrow2"
+        android:id="@+id/imageButton4"
+        android:adjustViewBounds="true"
+        android:background="@android:color/white"
+        android:padding="1dp"
+        android:scaleType="fitCenter"
+        android:paddingTop="300px"
+        android:layout_alignTop="@id/btnHeart"
+        android:layout_alignStart="@id/ivBook"
+        android:layout_marginTop="7dp"
+        android:layout_marginStart="10dp"
+        android:visibility="invisible"/>
+
+
 </RelativeLayout>

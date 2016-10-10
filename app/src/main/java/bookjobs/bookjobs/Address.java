@@ -1,9 +1,11 @@
 package bookjobs.bookjobs;
 
+import java.io.Serializable;
+
 /**
  * Created by Hung on 9/12/2016.
  */
-public class Address {
+public class Address implements Serializable {
 
     private double Latitude;
     private double Longitude;

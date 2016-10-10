@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,17 +24,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import bookjobs.bookjobs.ImageUploader.MyUploadService;
+
 /**
  * Created by Hung on 9/26/2016.
  */
 public class AddBookActivity extends AppCompatActivity {
+    public static final String BOOK_REFERENCE = "BookReference";
     public static final String IMAGE_TYPE = "image/*";
+    public static final String TAG = "ADDBOOK_ACTIVITY";
     private static final int SELECT_MULTIPLE_PICTURE = 201;
     private static final String LOG_TAG = "Add Image-AddBook";
     private ViewGroup mLinearLayout;
     ImageButton insertPicture;
     private Button mSubmitButton;
     protected String uploadResult = null;
+    private ArrayList<Uri> picturesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,8 @@ public class AddBookActivity extends AppCompatActivity {
         mLinearLayout = (ViewGroup) findViewById(R.id.addbook_pictures_linear_layout);
         insertPicture = (ImageButton) findViewById(R.id.addbook_insert_picture);
         mSubmitButton = (Button) findViewById(R.id.addbook_submit_button);
+
+        // add image to upload
         insertPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,12 +74,28 @@ public class AddBookActivity extends AppCompatActivity {
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Book toUpload = new Book(isbnView.getText().toString(), titleView.getText().toString());
+                Book toUploadBook = new Book(isbnView.getText().toString(), titleView.getText().toString());
 
-//                mDatabaseAuth = getIntent().getParcelableExtra("userAuth");
-//                String userEmail = mDatabaseAuth.getCurrentUser().getEmail();
                 String userEmail = getIntent().getStringExtra("userAuth");
-                new BookController.UploadBookTask(AddBookActivity.this, toUpload, userEmail).execute();
+                UploadCompleteListener mCompleteListener = new UploadCompleteListener() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(AddBookActivity.this, "Your book has been uploaded successfully!", Toast.LENGTH_LONG).show();
+                        for (Uri uri: picturesList){
+                            uploadFromUri(uri, uploadResult);
+                        }
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Toast.makeText(AddBookActivity.this, "Failed to upload book!", Toast.LENGTH_SHORT).show();
+                    }
+                };
+                new BookController.UploadBookTask(AddBookActivity.this, mCompleteListener,
+                        toUploadBook, userEmail, picturesList).execute();
+
+                finish();
+
             }
         });
     }
@@ -85,7 +109,7 @@ public class AddBookActivity extends AppCompatActivity {
             if(requestCode==SELECT_MULTIPLE_PICTURE){
                 Log.d(LOG_TAG, "The requeste code is: " + String.valueOf(requestCode==SELECT_MULTIPLE_PICTURE));
                 Log.d(LOG_TAG, "Action type is: " + String.valueOf(data.getAction()));
-                if (Intent.ACTION_SEND_MULTIPLE.equals(data.getAction())
+                if (Intent.ACTION_SEND_MULTIPLE == data.getAction()
                         && data.hasExtra(Intent.EXTRA_STREAM)) {
                     // retrieve a collection of selected images
                     ArrayList<Parcelable> list = data.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
@@ -99,6 +123,7 @@ public class AddBookActivity extends AppCompatActivity {
                 }
                 else if (data.getAction()=="inline-data"){
                     try {
+                        picturesList.add(data.getData());
                         inflatePicture((Bitmap) data.getExtras().get("data"));
                     } catch (IOException e) {
                         Log.e(LOG_TAG, "Failed to get images ", e);
@@ -135,6 +160,17 @@ public class AddBookActivity extends AppCompatActivity {
         ImageView toInsert = (ImageView) pictureInflater.inflate(R.layout.image_view_in_scroll_view, null, true);
         toInsert.setImageBitmap(picture);
         mLinearLayout.addView(toInsert);
+    }
+
+    private void uploadFromUri(Uri fileUri, String bookRef) {
+        Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
+
+        // Start MyUploadService to upload the file, so that the file is uploaded
+        // even if this Activity is killed or put in the background
+        this.startService(new Intent(this, MyUploadService.class)
+                .putExtra(MyUploadService.EXTRA_FILE_URI, fileUri)
+                .putExtra(BOOK_REFERENCE, bookRef)
+                .setAction(MyUploadService.ACTION_UPLOAD));
     }
 
 }

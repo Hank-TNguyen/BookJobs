@@ -1,11 +1,12 @@
 package bookjobs.bookjobs;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Aliasgar on 7/10/16.
  */
-public class Match {
+public class Match implements Serializable {
     Book book;
     User userWants;
     User userOwns;
