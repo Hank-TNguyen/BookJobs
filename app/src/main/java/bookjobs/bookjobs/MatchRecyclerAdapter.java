@@ -2,13 +2,20 @@ package bookjobs.bookjobs;
 
 
 
+import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.List;
 
 /**
@@ -21,10 +28,14 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
 
 
     private List<Match> matchList;
+    private Context context;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView title, author, genre,distance;
         public ImageView cover;
+        public CardView cardView;
+
 
         public MyViewHolder(View view) {
             super(view);
@@ -33,12 +44,18 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
             author = (TextView) view.findViewById(R.id.author);
             distance = (TextView) view.findViewById(R.id.distance);
             cover = (ImageView) view.findViewById(R.id.cover);
+            cardView = (CardView) view.findViewById(R.id.card_view);
+
+
         }
+
+
     }
 
 
-    public MatchRecyclerAdapter(List<Match> matchList) {
+    public MatchRecyclerAdapter(List<Match> matchList, Context context) {
         this.matchList = matchList;
+        this.context = context;
     }
 
     @Override
@@ -56,10 +73,14 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
         holder.genre.setText(match.getBook().getmGenre());
         holder.author.setText(match.getBook().getmAuthor());
         holder.distance.setText(""+match.getDistance()+" km");
+
+
     }
 
     @Override
     public int getItemCount() {
         return matchList.size();
     }
+
+
 }

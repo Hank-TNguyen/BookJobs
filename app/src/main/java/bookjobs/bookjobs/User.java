@@ -2,6 +2,8 @@ package bookjobs.bookjobs;
 
 import android.location.Location;
 
+import java.io.Serializable;
+
 /**
  * Created by Hung on 9/8/2016.
  * User class for BookJobs app, this contains the basic particulars of the users
@@ -10,7 +12,7 @@ import android.location.Location;
  *  User(): Default constructor required for calls to DataSnapshot.getValue(User.class)
  *  User(...): actual constructor where info is filled
  */
-public class User {
+public class User implements Serializable{
 
     private String Name;
     // email is also the ID because of its uniqueness

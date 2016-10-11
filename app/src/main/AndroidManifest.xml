@@ -31,8 +31,8 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".AddBookActivity"></activity>
         <service android:name=".ImageUploader.MyUploadService"></service>
+        <activity android:name=".AddBookActivity"></activity>
     </application>
 
 </manifest>
