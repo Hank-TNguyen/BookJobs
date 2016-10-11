@@ -1,5 +1,7 @@
 package bookjobs.bookjobs;
 
+import android.*;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -85,7 +87,15 @@ public class AddBookActivity extends AppCompatActivity {
                     public void onSuccess() {
                         Toast.makeText(AddBookActivity.this, "Your book has been uploaded successfully!", Toast.LENGTH_LONG).show();
                         for (Uri uri: picturesList){
-                            uploadFromUri(uri, uploadResult);
+                            try {
+                                Log.d("PERMISSION", String.valueOf(ContextCompat.checkSelfPermission(AddBookActivity.this,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED));
+                                uploadFromUri(uri, uploadResult);
+                            } catch (SecurityException e){
+                                ActivityCompat.requestPermissions(AddBookActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                        100);
+                                Log.e("permission denied??", e.getMessage());
+                            }
                         }
                     }
 

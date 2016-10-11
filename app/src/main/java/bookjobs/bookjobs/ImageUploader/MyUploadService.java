@@ -4,6 +4,7 @@ package bookjobs.bookjobs.ImageUploader;
  * Copied by Hung on 10/9/2016.
  */
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -102,38 +104,42 @@ public class MyUploadService extends MyBaseTaskService {
         Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
         // Here, thisActivity is the current activity
 
-        photoRef.putFile(fileUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Upload succeeded
-                        Log.d(TAG, "uploadFromUri:onSuccess");
+        try {
+            photoRef.putFile(fileUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Upload succeeded
+                            Log.d(TAG, "uploadFromUri:onSuccess");
 
-                        // Get the public download URL
-                        Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+                            // Get the public download URL
+                            Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
 
-                        updateBookPictures(downloadUri, mBookRef);
+                            updateBookPictures(downloadUri, mBookRef);
 
-                        // [START_EXCLUDE]
-                        broadcastUploadFinished(downloadUri, fileUri);
-                        showUploadFinishedNotification(downloadUri, fileUri);
-                        taskCompleted();
-                        // [END_EXCLUDE]
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Upload failed
-                        Log.w(TAG, "uploadFromUri:onFailure", exception);
+                            // [START_EXCLUDE]
+                            broadcastUploadFinished(downloadUri, fileUri);
+                            showUploadFinishedNotification(downloadUri, fileUri);
+                            taskCompleted();
+                            // [END_EXCLUDE]
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Upload failed
+                            Log.w(TAG, "uploadFromUri:onFailure", exception);
 
-                        // [START_EXCLUDE]
-                        broadcastUploadFinished(null, fileUri);
-                        showUploadFinishedNotification(null, fileUri);
-                        taskCompleted();
-                        // [END_EXCLUDE]
-                    }
-                });
+                            // [START_EXCLUDE]
+                            broadcastUploadFinished(null, fileUri);
+                            showUploadFinishedNotification(null, fileUri);
+                            taskCompleted();
+                            // [END_EXCLUDE]
+                        }
+                    });
+        } catch (SecurityException e){
+            Log.d("permission denial??", e.getMessage());
+        }
     }
     // [END upload_from_uri]
 

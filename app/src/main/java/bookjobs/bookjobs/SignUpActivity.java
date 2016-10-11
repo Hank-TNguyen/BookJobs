@@ -27,6 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText mNameView;
     private EditText mEmailView;
+    private EditText mAddressView;
     private EditText mPasswordView;
     private Button mSignUpButton;
 
@@ -48,27 +49,24 @@ public class SignUpActivity extends AppCompatActivity {
         mNameView = (EditText) findViewById(R.id.signup_name);
         mEmailView = (EditText) findViewById(R.id.signup_email);
         mPasswordView = (EditText) findViewById(R.id.signup_password);
+        mAddressView = (EditText) findViewById(R.id.signup_address);
         mSignUpButton = (Button) findViewById(R.id.signup_submit_button);
-
-        // for debug
-        // TODO: remove after use
-        mNameView.setText("Hank");
-        mEmailView.setText("Hankemail@gmail.com");
-        mPasswordView.setText("123456");
 
         // set up onclick listener
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptSignup();
+                attemptSignUp();
             }
         });
     }
 
-    private void attemptSignup(){
+    private void attemptSignUp(){
         // get email and password text
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String name = mNameView.getText().toString();
+        String address = mAddressView.getText().toString();
 
         // View and process parameters.Reset errors.
         mEmailView.setError(null);
@@ -99,8 +97,10 @@ public class SignUpActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            //TODO: add name and other information to the signup
-            mAuthTask = new UserSignUpTask(email, password);
+            User userToSignUp = new User(email);
+            userToSignUp.setName(name);
+            userToSignUp.setAddress(address);
+            mAuthTask = new UserSignUpTask(userToSignUp, password);
             mAuthTask.execute((Void) null);
         }
     }
@@ -116,15 +116,15 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public class UserSignUpTask extends AsyncTask<Void, Void, Boolean> {
-        private final String mEmail;
+        private final User mUser;
         private final String mPassword;
         private final String DBTAG = "Database in SIGNUP";
         private final String TAG = "SIGNUP TASK";
         private final String FAIL_TAG = "SIGNUP Failed";
         private DatabaseReference mUserDatabase;
 
-        UserSignUpTask(String email, String password) {
-            mEmail = email;
+        UserSignUpTask(User email, String password) {
+            mUser = email;
             mPassword = password;
         }
 
@@ -132,8 +132,8 @@ public class SignUpActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
             mDatabase = FirebaseDatabase.getInstance().getReference();
-            mUserDatabase = mDatabase.child("users").child(getUserFromEmail(mEmail));
-            mUserDatabase.setValue(new User(getUserFromEmail(mEmail)));
+            mUserDatabase = mDatabase.child("users").push();
+            mUserDatabase.setValue(mUser);
             Log.d(DBTAG, mDatabase.toString());
 
             return true;
@@ -152,7 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             if(success){
                 mAuth = FirebaseAuth.getInstance();
-                mAuth.createUserWithEmailAndPassword(mEmail, mPassword)
+                mAuth.createUserWithEmailAndPassword(mUser.getEmail(), mPassword)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {

@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
         //TODO: DELETE THESE AFTER DEBUGGING
-        mEmailView.setText("Hankemail@gmail.com");
+        mEmailView.setText("t.hung.95@gmail.com");
         mPasswordView.setText("123456");
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -381,11 +381,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         private void onAuthSuccess(FirebaseUser user) {
-            String username = usernameFromEmail(user.getEmail());
 
             // Go to MainActivity
             Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
-            goToMain.putExtra("userAuth", username);
+            goToMain.putExtra("userAuth", user.getEmail());
 
             startActivity(goToMain);
             finish();
