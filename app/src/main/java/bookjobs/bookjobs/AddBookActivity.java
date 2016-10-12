@@ -4,6 +4,7 @@ import android.*;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -40,6 +41,7 @@ public class AddBookActivity extends AppCompatActivity {
     public static final String TAG = "ADDBOOK_ACTIVITY";
     private static final int SELECT_MULTIPLE_PICTURE = 201;
     private static final String LOG_TAG = "Add Image-AddBook";
+    private static final String EXTERNAL_READ_PERMISSION = "permission_external_read";
     private ViewGroup mLinearLayout;
     ImageButton insertPicture;
     private Button mSubmitButton;
@@ -79,6 +81,20 @@ public class AddBookActivity extends AppCompatActivity {
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(permissionGranted())
+                {
+                    SharedPreferences sharedPreferences = getSharedPreferences("prefs", 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(EXTERNAL_READ_PERMISSION, true);
+                    editor.commit();
+                }
+                else
+                {
+                    ActivityCompat.requestPermissions(AddBookActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            100);
+                }
+
                 Book toUploadBook = new Book(isbnView.getText().toString(), titleView.getText().toString());
 
                 String userEmail = getIntent().getStringExtra("userAuth");
@@ -92,8 +108,7 @@ public class AddBookActivity extends AppCompatActivity {
                                         Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED));
                                 uploadFromUri(uri, uploadResult);
                             } catch (SecurityException e){
-                                ActivityCompat.requestPermissions(AddBookActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                        100);
+
                                 Log.e("permission denied??", e.getMessage());
                             }
                         }
@@ -111,6 +126,11 @@ public class AddBookActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean permissionGranted() {
+        SharedPreferences  sharedPreferences = getSharedPreferences("prefs", 0);
+        return sharedPreferences.getBoolean(EXTERNAL_READ_PERMISSION, false);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

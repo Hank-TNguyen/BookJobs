@@ -114,7 +114,7 @@ public class MyDownloadService extends MyBaseTaskService {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-    a                    Log.w(TAG, "download:FAILURE", exception);
+                        Log.e(TAG, "download:FAILURE", exception);
 
                         // Send failure broadcast
                         Intent broadcast = new Intent(DOWNLOAD_ERROR);

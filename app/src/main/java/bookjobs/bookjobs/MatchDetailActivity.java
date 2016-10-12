@@ -54,7 +54,9 @@ public class MatchDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Creates an Intent that will load a map
-                Uri gmmIntentUri = Uri.parse("geo:"+match.getUserWants().getLocation().getLatitude()+","+match.getUserWants().getLocation().getLatitude());
+//                Uri gmmIntentUri = Uri.parse("geo:q=1.4043485,103.793023");
+                //Uri gmmIntentUri = Uri.parse("google.navigation:q=1.4043485,103.793023");
+                Uri gmmIntentUri = Uri.parse("google.navigation:q="+match.getUserWants().getLocation().getLatitude()+","+match.getUserWants().getLocation().getLatitude());
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);
