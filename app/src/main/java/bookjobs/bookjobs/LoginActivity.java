@@ -7,6 +7,7 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -385,6 +386,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Go to MainActivity
             Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
             goToMain.putExtra("userAuth", user.getEmail());
+
+            SharedPreferences sharedPreferences = getSharedPreferences("prefs", 0);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("user_email", user.getEmail());
+            editor.putString("user_id", user.getUid());
+            editor.commit();
+
+
+
 
             startActivity(goToMain);
             finish();

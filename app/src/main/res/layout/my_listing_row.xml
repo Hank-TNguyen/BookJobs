@@ -10,6 +10,7 @@
         android:layout_marginTop="20px"
         android:layout_marginLeft="20px"
         android:layout_marginBottom="20px"
+        android:src="@drawable/bookcover"
         app:srcCompat="@drawable/profilebook"
         android:id="@+id/bookPic" />
 

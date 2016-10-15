@@ -54,7 +54,6 @@ public class BooksFragment extends Fragment {
     ImageButton btnHeart;
     ImageButton btnCross;
     ImageView ivbook;
-    RecyclerView recyclerView;
     ArrayList<Book> bookArrayList;
     int currentBookIndex = -1;
 
@@ -99,16 +98,12 @@ public class BooksFragment extends Fragment {
             }
         });
 
-        Book book = new Book("1234", "Life of Pi", "Mr. Richard Williams", "Philosophy");
-        User user1 = new User("John", "john@gmail.com","Loves travelling", "Singapore", new Address(10.12,17.32));
-        User user2 = new User("Tay", "tay@gmail.com","Loves food", "New York", new Address(-10.12,17.32));
-        Match first = new Match(book,user1, user2, new Date(2016,05,15),false,false);
 
         final List<Book> bookList = new ArrayList<>();
-        bookList.add(book);
 
 
-        getPost();
+        if(bookList.size()<=0)
+            getPost();
 
         return rootView;
     }
@@ -122,19 +117,24 @@ public class BooksFragment extends Fragment {
         Book newBook;
         Random random = new Random();
 
-        if(currentBookIndex != -1)
+        if(currentBookIndex != -1 )
         {
-            bookArrayList.remove(currentBookIndex);
+            if(bookArrayList.size()>0)
+                bookArrayList.remove(currentBookIndex);
+            else
+                currentBookIndex = -1;
         }
 
         if(bookArrayList.size()>0)
         {
-            newBook = bookArrayList.get(random.nextInt(bookArrayList.size()));
+            currentBookIndex = random.nextInt(bookArrayList.size());
+            newBook = bookArrayList.get(currentBookIndex);
             author.setText(newBook.getmAuthor());
             bookTitle.setText(newBook.getmTitle());
             bookGenre.setText(newBook.getmGenre());
             bookISBN.setText(newBook.getmISBN());
         }
+
 
 
 
@@ -151,7 +151,6 @@ public class BooksFragment extends Fragment {
             public void onDataChange(DataSnapshot snapshot) {
 
                 for (DataSnapshot child : snapshot.getChildren()) {
-
 
                     Book book = child.getValue(Book.class);
                     bookArrayList.add(book);

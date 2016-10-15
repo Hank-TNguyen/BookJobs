@@ -46,8 +46,8 @@ public class MyListingsAdapter extends ArrayAdapter<Book> {
         ImageView bookImage = (ImageView) convertView.findViewById(R.id.bookPic);
         String uri = "drawable/" + book.getPicURL();
         int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        Drawable image = context.getResources().getDrawable(imageResource);
-        bookImage.setImageDrawable(image);
+        //Drawable image = context.getResources().getDrawable(imageResource);
+        //bookImage.setImageDrawable(image);
 
         TextView noOfLikes = (TextView) convertView.findViewById(R.id.noOfLikes);
         noOfLikes.setText(Integer.toString(book.getNoOfLikes()));
@@ -62,8 +62,6 @@ public class MyListingsAdapter extends ArrayAdapter<Book> {
         if (!book.isAvailability()){
             availability.setVisibility(View.VISIBLE);
         }
-
-
 
         return convertView;
     }
