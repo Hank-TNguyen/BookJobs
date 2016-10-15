@@ -1,15 +1,41 @@
 package bookjobs.bookjobs;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import org.w3c.dom.Comment;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Aliasgar on 5/9/16.
@@ -19,12 +45,18 @@ import android.widget.TextView;
 
 public class BooksFragment extends Fragment {
 
+    private DatabaseReference mPostReference;
+    private StorageReference mStorageReference;
+
     // CHEE TENG ATTRIBUTES
     TextView bookTitle;
-    TextView author;
+    TextView author, bookISBN, bookGenre;
     ImageButton btnHeart;
     ImageButton btnCross;
     ImageView ivbook;
+    RecyclerView recyclerView;
+    ArrayList<Book> bookArrayList;
+    int currentBookIndex = -1;
 
     int clickcounter = 0;
 
@@ -49,9 +81,14 @@ public class BooksFragment extends Fragment {
         btnCross = (ImageButton)rootView.findViewById(R.id.btnCross);
         author = (TextView)rootView.findViewById(R.id.tvBookAuthor);
         bookTitle = (TextView)rootView.findViewById(R.id.tvBookTitle);
+        bookISBN = (TextView)rootView.findViewById(R.id.tvBookISBN);
+        bookGenre = (TextView)rootView.findViewById(R.id.tvBookGenre);
+
+        bookArrayList = new ArrayList<>();
 
         btnHeart.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                updateDatabase();
                 loadNewBook();
             }
         });
@@ -62,104 +99,86 @@ public class BooksFragment extends Fragment {
             }
         });
 
+        Book book = new Book("1234", "Life of Pi", "Mr. Richard Williams", "Philosophy");
+        User user1 = new User("John", "john@gmail.com","Loves travelling", "Singapore", new Address(10.12,17.32));
+        User user2 = new User("Tay", "tay@gmail.com","Loves food", "New York", new Address(-10.12,17.32));
+        Match first = new Match(book,user1, user2, new Date(2016,05,15),false,false);
+
+        final List<Book> bookList = new ArrayList<>();
+        bookList.add(book);
+
+
+        getPost();
+
         return rootView;
     }
 
-    //------------------------------------CHEE TENG METHODS-------------------------------//
+    private void updateDatabase() {
+
+    }
+
 
     public void loadNewBook(){
-        if (clickcounter==0) {
+        Book newBook;
+        Random random = new Random();
 
-            String uri = "@drawable/book1";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("Enchantment");
-            author.setText("Guy Kawasaki");
+        if(currentBookIndex != -1)
+        {
+            bookArrayList.remove(currentBookIndex);
         }
 
-        else if (clickcounter==1) {
-            String uri = "@drawable/book2";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("The Last Wild");
-            author.setText("Piers Torday");
+        if(bookArrayList.size()>0)
+        {
+            newBook = bookArrayList.get(random.nextInt(bookArrayList.size()));
+            author.setText(newBook.getmAuthor());
+            bookTitle.setText(newBook.getmTitle());
+            bookGenre.setText(newBook.getmGenre());
+            bookISBN.setText(newBook.getmISBN());
         }
 
-        else if (clickcounter==2) {
-            String uri = "@drawable/book3";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("Boring Girls");
-            author.setText("Sara Taylor");
-        }
 
-        else if (clickcounter==3) {
-            String uri = "@drawable/book4";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("Blooming Business");
-            author.setText("Alessia Patterson");
-        }
 
-        else if (clickcounter==4) {
-            String uri = "@drawable/book5";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("Life Plan");
-            author.setText("Michael Hyatt");
-        }
-
-        else if (clickcounter==5) {
-            String uri = "@drawable/book6";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("Eleven Minutes");
-            author.setText("Paul Coelho");
-        }
-
-        else if (clickcounter==6) {
-            String uri = "@drawable/book7";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("For One More Day");
-            author.setText("Mitch Albom");
-        }
-
-        else if (clickcounter==7) {
-            String uri = "@drawable/book8";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("Adventures of Huckleberry Finn");
-            author.setText("Mark Twain");
-        }
-
-        else if (clickcounter==8) {
-            String uri = "@drawable/book9";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("The Girl's Playground");
-            author.setText("Alexandria Jackson");
-        }
-
-        else if (clickcounter==9) {
-            String uri = "@drawable/book10";
-            int imageResource = getResources().getIdentifier(uri, null, MainActivity.PACKAGE_NAME);
-            Drawable res = getResources().getDrawable(imageResource);
-            ivbook.setImageDrawable(res);
-            bookTitle.setText("The Railway Children");
-            author.setText("E.Nesbit");
-            clickcounter = 0;
-        }
-
-        clickcounter++;
     }
+
+    public boolean getPost()
+    {
+        mPostReference = FirebaseDatabase.getInstance().getReference()
+                .child("books");
+        mStorageReference = FirebaseStorage.getInstance().getReference();
+
+        mPostReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for (DataSnapshot child : snapshot.getChildren()) {
+
+
+                    Book book = child.getValue(Book.class);
+                    bookArrayList.add(book);
+                    Log.d("TAG",""+child.getValue());
+//
+//                    mStorageReference.child("photos/1920.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                        @Override
+//                        public void onSuccess(Uri uri) {
+//                            // Got the download URL for 'users/me/profile.png'
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception exception) {
+//                            // Handle any errors
+//                        }
+//                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return true;
+    }
+
+
 }

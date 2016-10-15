@@ -47,6 +47,27 @@
         android:textColor="@android:color/black"
         android:textSize="15sp"/>
 
+    <TextView
+        android:text="Philosophy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBookAuthor"
+        android:layout_alignStart="@+id/tvBookTitle"
+        android:id="@+id/tvBookGenre"
+        android:fontFamily="casual"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"/>
+    <TextView
+        android:text="1234"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBookGenre"
+        android:layout_alignStart="@+id/tvBookTitle"
+        android:id="@+id/tvBookISBN"
+        android:fontFamily="casual"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"/>
+
     <ImageButton
         android:layout_width="300px"
         android:layout_height="300px"

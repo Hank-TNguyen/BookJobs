@@ -16,6 +16,11 @@ public class Book implements Serializable {
     private boolean availability;
     private int noOfLikes;
 
+    public Book()
+    {
+
+    }
+
     public Book(String mISBN, String mTitle) {
         this.mISBN = mISBN;
         this.mTitle = mTitle;

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:src="@drawable/bookcover"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="30px"
+        android:layout_marginTop="7dp"
+        android:id="@+id/ivBook"
+        android:scaleType="fitCenter"
+        android:padding="1px" />
+
+    <TextView
+        android:text="The Humane Interface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivBook"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvBookTitle"
+        android:fontFamily="casual"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="Jeft Raskin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBookTitle"
+        android:layout_alignStart="@+id/tvBookTitle"
+        android:id="@+id/tvBookAuthor"
+        android:fontFamily="casual"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"/>
+    <TextView
+        android:text="Philosophy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBookAuthor"
+        android:layout_alignStart="@+id/tvBookTitle"
+        android:id="@+id/tvBookGenre"
+        android:fontFamily="casual"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"/>
+    <TextView
+        android:text="1234"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBookGenre"
+        android:layout_alignStart="@+id/tvBookTitle"
+        android:id="@+id/tvBookISBN"
+        android:fontFamily="casual"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"/>
+</RelativeLayout>

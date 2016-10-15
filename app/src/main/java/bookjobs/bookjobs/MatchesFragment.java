@@ -11,16 +11,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Aliasgar on 5/9/16.
  */
 public class MatchesFragment extends Fragment {
 
+    private static final String TAG = "MATCHESFRAGMENT";
+    DatabaseReference mDatabase;
     public MatchesFragment() {
 
     }
@@ -69,6 +80,8 @@ public class MatchesFragment extends Fragment {
             }
         }));
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         return rootView;
     }
 
@@ -79,5 +92,59 @@ public class MatchesFragment extends Fragment {
         startActivity(intent);
 
     }
+
+    public void getUpdates()
+    {
+
+//        // [START single_value_read]
+//        final String userId = "1234";
+//        mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
+//                new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        // Get user value
+//                        User user = dataSnapshot.getValue(User.class);
+//
+//                        // [START_EXCLUDE]
+//                        if (user == null) {
+//                            // User is null, error out
+//                            Log.e(TAG, "User " + userId + " is unexpectedly null");
+//                            Toast.makeText(getContext(),
+//                                    "Error: could not fetch user.",
+//                                    Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            // Write new post
+//                            writeNewPost(userId, user.username, title, body);
+//                        }
+//
+//
+//                        // [END_EXCLUDE]
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+//                        // [START_EXCLUDE]
+//
+//                        // [END_EXCLUDE]
+//                    }
+//                });
+//        // [END single_value_read]
+//    }
+//    // [START write_fan_out]
+//    private void writeNewPost(String userId, String username, String title, String body) {
+//        // Create new post at /user-posts/$userid/$postid and at
+//        // /posts/$postid simultaneously
+//        String key = mDatabase.child("posts").push().getKey();
+//        U post = new Post(userId, username, title, body);
+//        Map<String, Object> postValues = post.toMap();
+//
+//        Map<String, Object> childUpdates = new HashMap<>();
+//        childUpdates.put("/posts/" + key, postValues);
+//        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
+//
+//        mDatabase.updateChildren(childUpdates);
+    }
+    // [END write_fan_out]
 
 }

@@ -74,19 +74,12 @@
                 android:id="@+id/addbook_genre"/>
             <EditText android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:hint="field 1"
+                android:hint="author"
                 android:background="#f3f3f3"
                 android:paddingLeft="5dp"
                 android:layout_marginTop="15dp"
-                android:id="@+id/addbook_" />
+                android:id="@+id/addbook_author" />
 
-            <EditText android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:hint="field 2"
-                android:background="#f3f3f3"
-                android:paddingLeft="5dp"
-                android:layout_marginTop="15dp"
-                android:id="@+id/addbook_2" />
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"

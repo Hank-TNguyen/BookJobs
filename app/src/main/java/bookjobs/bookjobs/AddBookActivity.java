@@ -56,6 +56,8 @@ public class AddBookActivity extends AppCompatActivity {
         //set up wings
         final TextView isbnView = (TextView) findViewById(R.id.addbook_ISBN);
         final TextView titleView = (TextView) findViewById(R.id.addbook_title);
+        final TextView genreView = (TextView) findViewById(R.id.addbook_genre);
+        final TextView authorView = (TextView) findViewById(R.id.addbook_author);
 //        TextView genreView
 
         mLinearLayout = (ViewGroup) findViewById(R.id.addbook_pictures_linear_layout);
@@ -95,7 +97,7 @@ public class AddBookActivity extends AppCompatActivity {
                             100);
                 }
 
-                Book toUploadBook = new Book(isbnView.getText().toString(), titleView.getText().toString());
+                Book toUploadBook = new Book(isbnView.getText().toString(), titleView.getText().toString(), authorView.getText().toString(), genreView.getText().toString());
 
                 String userEmail = getIntent().getStringExtra("userAuth");
                 UploadCompleteListener mCompleteListener = new UploadCompleteListener() {
