@@ -14,6 +14,12 @@ public class Match implements Serializable {
     boolean ownerStatus;
     boolean wanterStatus;
 
+    public Match(Book book, User userOwns)
+    {
+        this.book = book;
+        this.userOwns = userOwns;
+    }
+
     public Match(Book book, User userWants, User userOwns, Date dateOfMatch, boolean ownerStatus, boolean wanterStatus)
     {
         this.book = book;

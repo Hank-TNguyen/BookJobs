@@ -51,6 +51,13 @@ public class User implements Serializable{
         this.location = location;
     }
 
+    public User(String name, String email,String address) {
+        Name = name;
+        Email = email;
+        Address = address;
+
+    }
+
     public String getName() {
         return Name;
     }

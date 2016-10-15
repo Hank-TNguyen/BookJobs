@@ -21,11 +21,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -46,6 +49,7 @@ import java.util.Random;
 public class BooksFragment extends Fragment {
 
     private DatabaseReference mPostReference;
+    private DatabaseReference mCurrentUserReference;
     private StorageReference mStorageReference;
 
     // CHEE TENG ATTRIBUTES
@@ -73,6 +77,12 @@ public class BooksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_books, container,
                 false);
+
+        mPostReference = FirebaseDatabase.getInstance().getReference()
+                .child("books");
+
+        mCurrentUserReference = FirebaseDatabase.getInstance().getReference()
+                .child("users");
 
         // CHEE TENG CODE
         ivbook = (ImageView)rootView.findViewById(R.id.ivBook);
@@ -109,6 +119,40 @@ public class BooksFragment extends Fragment {
     }
 
     private void updateDatabase() {
+
+        if(currentBookIndex!=-1)
+        {
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            Query query = mCurrentUserReference.orderByChild("email").equalTo(user.getEmail());
+
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String value = dataSnapshot.getValue().toString();
+                    String userRef = value.substring(1, value.indexOf('='));
+                    if(bookArrayList.size()>0)
+                    {
+                        Book book = bookArrayList.get(currentBookIndex);
+                        dataSnapshot.child(userRef).child("wants").child(book.getmISBN()).getRef().setValue(1);
+
+                    }
+                                   }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e("BooksFragment", "Failed to reach the server");
+                }
+            });
+
+        }
+        else
+        {
+            Toast.makeText(getContext(),"Illegal click - Please report", Toast.LENGTH_SHORT).show();
+        }
+
+
 
     }
 
