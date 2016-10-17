@@ -90,6 +90,7 @@ public class MatchesFragment extends Fragment {
 
         Query query = mCurrentUser.orderByChild("email").equalTo(user.getEmail());
 
+        //Get current user details for retreiving the list of books the user owns
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -118,7 +119,7 @@ public class MatchesFragment extends Fragment {
                     }
                 }
 
-
+                //Receiving all books to match ISBN with refKeys
                 mBooksDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
@@ -171,8 +172,8 @@ public class MatchesFragment extends Fragment {
                             }
 
                         }
-                        //Query queryUser = mCurrentUser.child("owns").orderByChild(refKey).equalTo("1");
 
+                        //Retrieving all users list to check who wants the book the current user owns
                         mCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
