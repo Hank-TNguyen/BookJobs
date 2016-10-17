@@ -91,7 +91,8 @@ public class MatchesFragment extends Fragment {
         Query query = mCurrentUser.orderByChild("email").equalTo(user.getEmail());
 
         //Get current user details for retreiving the list of books the user owns
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        try {
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue().toString();
@@ -120,6 +121,7 @@ public class MatchesFragment extends Fragment {
                 }
 
                 //Receiving all books to match ISBN with refKeys
+
                 mBooksDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
@@ -285,6 +287,9 @@ public class MatchesFragment extends Fragment {
 
             }
         });
+        } catch (NullPointerException e){
+            // for some reason, database is empty
+        }
     }
 }
 

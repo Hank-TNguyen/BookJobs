@@ -129,7 +129,7 @@ public class BookController {
         }
     }
 
-    public static void updateBookPicture(Uri uri, String bookRef){
+    public static void updateBookPicture(String uri, String bookRef){
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mBooksDatabase = mDatabase.child("books").child(bookRef);
         final DatabaseReference newPhoto = mBooksDatabase.child("photos").push();

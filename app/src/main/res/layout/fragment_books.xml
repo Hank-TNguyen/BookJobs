@@ -10,23 +10,11 @@
     android:background="@android:color/white"
     tools:context="bookjobs.bookjobs.BooksFragment">
 
-    <ImageView
-        android:layout_width="1000px"
-        android:layout_height="800px"
-        android:src="@drawable/bookcover"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="30px"
-        android:layout_marginTop="7dp"
-        android:id="@+id/ivBook"
-        android:scaleType="fitCenter"
-        android:padding="1px" />
-
     <TextView
         android:text="The Humane Interface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivBook"
+        android:layout_below="@+id/fragment_books_images_scrollview"
         android:layout_alignParentStart="true"
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
@@ -91,10 +79,10 @@
         android:background="@android:color/white"
         android:padding="1dp"
         android:scaleType="fitCenter"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="170px"
-        android:layout_below="@+id/tvBookAuthor"
-        />
+        android:layout_alignBottom="@+id/tvBookISBN"
+        android:layout_toEndOf="@+id/tvBookAuthor"
+        android:layout_below="@+id/fragment_books_images_scrollview"
+        android:layout_marginStart="44dp" />
 
     <ImageView
         android:layout_width="150px"
@@ -107,7 +95,6 @@
         android:scaleType="fitCenter"
         android:layout_marginTop="7dp"
         android:layout_alignTop="@+id/btnCross"
-        android:layout_alignEnd="@+id/ivBook"
         android:layout_marginEnd="10dp"
         android:visibility="invisible"/>
 
@@ -122,9 +109,25 @@
         android:scaleType="fitCenter"
         android:paddingTop="300px"
         android:layout_alignTop="@id/btnHeart"
-        android:layout_alignStart="@id/ivBook"
         android:layout_marginTop="7dp"
         android:layout_marginStart="10dp"
         android:visibility="invisible"/>
+
+    <HorizontalScrollView
+        android:layout_width="1000px"
+        android:layout_height="800px"
+        android:id="@+id/fragment_books_images_scrollview"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/imageButton4">
+
+        <LinearLayout
+            android:id="@+id/fragment_books_images_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package bookjobs.bookjobs;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,8 @@ import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Comment;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,9 +52,13 @@ import java.util.Random;
 
 public class BooksFragment extends Fragment {
 
+    private final String TAG = "GetPost:";
+
     private DatabaseReference mPostReference;
     private DatabaseReference mCurrentUserReference;
     private StorageReference mStorageReference;
+
+    LinearLayout imagesView;
 
     // CHEE TENG ATTRIBUTES
     TextView bookTitle;
@@ -59,6 +67,7 @@ public class BooksFragment extends Fragment {
     ImageButton btnCross;
     ImageView ivbook;
     ArrayList<Book> bookArrayList;
+    ArrayList<ArrayList<Uri>> imagesList = new ArrayList<>();
     int currentBookIndex = -1;
 
     int clickcounter = 0;
@@ -77,6 +86,8 @@ public class BooksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_books, container,
                 false);
+
+        imagesView = (LinearLayout) rootView.findViewById(R.id.fragment_books_images_linear_layout);
 
         mPostReference = FirebaseDatabase.getInstance().getReference()
                 .child("books");
@@ -136,9 +147,8 @@ public class BooksFragment extends Fragment {
                     {
                         Book book = bookArrayList.get(currentBookIndex);
                         dataSnapshot.child(userRef).child("wants").child(book.getmISBN()).getRef().setValue(1);
-
                     }
-                                   }
+                }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -151,9 +161,6 @@ public class BooksFragment extends Fragment {
         {
             Toast.makeText(getContext(),"Illegal click - Please report", Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 
 
@@ -177,12 +184,18 @@ public class BooksFragment extends Fragment {
             bookTitle.setText(newBook.getmTitle());
             bookGenre.setText(newBook.getmGenre());
             bookISBN.setText(newBook.getmISBN());
+
+            ArrayList<Uri> mImages;
+            mImages = imagesList.get(currentBookIndex);
+            for (Uri image : mImages){
+                Uri imageURI = image;
+                Log.d(TAG, "TTTTTTTT" +imageURI.getLastPathSegment());
+            }
         }
 
-
-
-
     }
+
+
 
     public boolean getPost()
     {
@@ -198,20 +211,14 @@ public class BooksFragment extends Fragment {
 
                     Book book = child.getValue(Book.class);
                     bookArrayList.add(book);
-                    Log.d("TAG",""+child.getValue());
-//
-//                    mStorageReference.child("photos/1920.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                        @Override
-//                        public void onSuccess(Uri uri) {
-//                            // Got the download URL for 'users/me/profile.png'
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception exception) {
-//                            // Handle any errors
-//                        }
-//                    });
 
+                    Log.d(TAG,":Number of images:"+child.child("photos").getChildrenCount());
+                    ArrayList<Uri> mImages = new ArrayList<>();
+                    for (DataSnapshot imageURL : child.child("photos").getChildren()){
+//                        mImages.add((Uri) imageURL.getValue());
+//                        mImages.add()
+                    }
+                    imagesList.add(mImages);
                 }
             }
 
@@ -222,6 +229,5 @@ public class BooksFragment extends Fragment {
         });
         return true;
     }
-
 
 }
