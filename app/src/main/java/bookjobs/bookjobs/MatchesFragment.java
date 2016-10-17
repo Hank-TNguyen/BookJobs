@@ -100,12 +100,12 @@ public class MatchesFragment extends Fragment {
 
                 HashMap.Entry<String, Object> entry = response.entrySet().iterator().next();
 
-                HashMap<String, Object> user = (HashMap<String, Object>) entry.getValue();
+                final HashMap<String, Object> user = (HashMap<String, Object>) entry.getValue();
 
                 Iterator it = user.entrySet().iterator();
                 while (it.hasNext()) {
                     HashMap.Entry book = (HashMap.Entry) it.next();
-                    if(( book.getKey()).equals("wants"))
+                    if(( book.getKey()).equals("owns"))
                     {
                         HashMap<String, Object> bookSpecific = (HashMap<String, Object>) book.getValue();
                         Iterator itBook = bookSpecific.entrySet().iterator();
@@ -139,7 +139,7 @@ public class MatchesFragment extends Fragment {
                                 HashMap.Entry bookFinal = (HashMap.Entry) itBook.next();
                                 if (bookFinal.getKey().equals("mISBN")) {
                                     pair.put(bookFinal.getValue().toString(),pairValue);
-                                    if (bookIDs.contains(bookFinal.getValue())) {
+                                    if (bookIDs.contains(pair.get(bookFinal.getValue()))) {
                                         try {
                                             //Found
                                             HashMap<String, Object> bookHashMap = (HashMap<String, Object>) book.getValue();
@@ -186,7 +186,7 @@ public class MatchesFragment extends Fragment {
                                     while (iterator1.hasNext())
                                     {
                                         HashMap.Entry bookFinal = (HashMap.Entry) iterator1.next();
-                                        if(bookFinal.getKey().equals("owns"))
+                                        if(bookFinal.getKey().equals("wants"))
                                         {
 
                                             HashMap<String, Object> bookSpecific = (HashMap<String, Object>) bookFinal.getValue();
@@ -196,22 +196,27 @@ public class MatchesFragment extends Fragment {
                                                 HashMap.Entry bookSpecifics = (HashMap.Entry) itBook.next();
                                                 Book local =null;
 
-                                                if(refkeys.contains(bookSpecifics.getKey().toString()))
+                                                if(!user.get("email").equals(response.get("email")))
                                                 {
-                                                    for(Book book: booksMatch)
+                                                    if(refkeys.contains(pair.get(bookSpecifics.getKey().toString())))
                                                     {
-                                                        if(bookSpecifics.getKey().toString().equals(pair.get(book.getmISBN())))
+                                                        for(Book book: booksMatch)
                                                         {
-                                                            local = book;
+                                                            if(bookSpecifics.getKey().toString().equals(book.getmISBN()))
+                                                            {
+                                                                local = book;
+                                                            }
                                                         }
+                                                        //This is the user
+                                                        response.get("address");
+                                                        response.get("email");
+                                                        response.get("name");
+                                                        User owner = new User(user.get("name").toString(), user.get("email").toString(), user.get("address").toString());
+                                                        User wanter = new User( response.get("name").toString(),response.get("email").toString(), response.get("address").toString());
+                                                        foundMatch.add(new Match(local,owner, wanter));
                                                     }
-                                                    //This is the user
-                                                    response.get("address");
-                                                    response.get("email");
-                                                    response.get("name");
-                                                    User user2 = new User( response.get("name").toString(),response.get("email").toString(), response.get("address").toString());
-                                                    foundMatch.add(new Match(local, user2));
                                                 }
+
 
                                             }
                                         }
