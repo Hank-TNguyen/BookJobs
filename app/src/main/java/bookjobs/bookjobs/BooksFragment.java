@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +24,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Priority;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -33,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StreamDownloadTask;
@@ -40,12 +46,18 @@ import com.google.firebase.storage.StreamDownloadTask;
 import org.w3c.dom.Comment;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import bookjobs.bookjobs.ImageUploader.FirebaseImageLoader;
+import bookjobs.bookjobs.ImageUploader.ImageDownloader;
 
 /**
  * Created by Aliasgar on 5/9/16.
@@ -62,6 +74,7 @@ public class BooksFragment extends Fragment {
     private final String TAG = "GetPost:";
     ArrayList<ArrayList<String>> imagesList = new ArrayList<>();
     LinearLayout imagesView;
+    Bitmap[] bitmaps;
 
     // CHEE TENG ATTRIBUTES
     TextView bookTitle;
@@ -74,6 +87,8 @@ public class BooksFragment extends Fragment {
     int currentBookIndex = -1;
 
     int clickcounter = 0;
+
+
 
     public BooksFragment() {
 
@@ -152,7 +167,7 @@ public class BooksFragment extends Fragment {
                         dataSnapshot.child(userRef).child("wants").child(book.getmISBN()).getRef().setValue(1);
 
                     }
-                                   }
+                }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -171,7 +186,7 @@ public class BooksFragment extends Fragment {
     }
 
 
-    public void loadNewBook(){
+    public void loadNewBook() {
         Book newBook;
         Random random = new Random();
 
@@ -196,43 +211,55 @@ public class BooksFragment extends Fragment {
             // get the image storage reference
             mStorageReference = FirebaseStorage.getInstance().getReference();
 
-            ArrayList<String> mImages;
+            final ArrayList<String> mImages;
             mImages = imagesList.get(currentBookIndex);
 
             final LayoutInflater mLI = getActivity().getLayoutInflater();
-            final InputStream[] inputStreams = new InputStream[mImages.size()];
+
+            bitmaps = new Bitmap[mImages.size()];
             for (int i = 0; i < mImages.size(); i++){
                 String image = mImages.get(i);
                 final int finalI = i;
-                mStorageReference.child(image).getStream(new StreamDownloadTask.StreamProcessor() {
+
+                mStorageReference.child(image)
+                        .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void doInBackground(StreamDownloadTask.TaskSnapshot taskSnapshot, InputStream inputStream) throws IOException {
-                        inputStream.close();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<StreamDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(StreamDownloadTask.TaskSnapshot taskSnapshot) {
-                        Log.d(TAG, "download:SUCCESS");
-                        inputStreams[finalI] = taskSnapshot.getStream();
-                        Log.d("DEBUG GETPOST", inputStreams[finalI].toString());
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "download:FAIL: " +e.getMessage());
+                    public void onSuccess(Uri uri) {
+                        Log.d(TAG, "uri is: " + uri.toString());
+                        URL url = null;
+                        try {
+                            url = new URL(uri.toString());
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+
+                        ImageDownloader IDTask = new ImageDownloader(url);
+                        IDTask.setCompleteListener(new MyCompleteListener() {
+                            @Override
+                            public void onSuccess(Bitmap bm) {
+                                bitmaps[finalI] = bm;
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ImageView iv = (ImageView) mLI.inflate(R.layout.image_view_in_scroll_view, null, true);
+                                        iv.setImageBitmap(bitmaps[finalI]);
+                                        imagesView.addView(iv);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFail() {
+
+                            }
+                        });
+                        IDTask.execute();
+
                     }
                 });
+
             }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    for (InputStream is : inputStreams){
-                        ImageView iv = (ImageView) mLI.inflate(R.layout.image_view_in_scroll_view, null, true);
-                        iv.setImageBitmap(BitmapFactory.decodeStream(is));
-                        imagesView.addView(iv);
-                    }
-                }
-            });
+
         }
     }
 

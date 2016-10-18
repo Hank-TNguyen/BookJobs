@@ -2,12 +2,10 @@ package bookjobs.bookjobs;
 
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -40,11 +38,11 @@ public class BookController {
         final String OWN_LIST = "uOwns";
         private AddBookActivity mActivity;
         private ArrayList<Uri> pictures;
-        private UploadCompleteListener completeListener;
+        private MyCompleteListener completeListener;
         static String bookRef = null;
         private static final String TAG = "UPLOAD_RESULT";
 
-        public UploadBookTask(AddBookActivity activity, UploadCompleteListener mCompleteListener, Book mBook, String mUser, ArrayList<Uri> picturesList) {
+        public UploadBookTask(AddBookActivity activity, MyCompleteListener mCompleteListener, Book mBook, String mUser, ArrayList<Uri> picturesList) {
             this.mBook = mBook;
             this.mUserEmail = mUser;
             this.completeListener = mCompleteListener;
@@ -119,8 +117,6 @@ public class BookController {
             if (result!=null){
                 //an UUID was returned for the book. this means upload was succeeded.
                 mActivity.uploadResult = result;
-                completeListener.onSuccess();
-
 
             } else {
                 completeListener.onFail();

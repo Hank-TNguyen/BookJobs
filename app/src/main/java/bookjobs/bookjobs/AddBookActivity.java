@@ -1,6 +1,5 @@
 package bookjobs.bookjobs;
 
-import android.*;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -23,10 +22,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,9 +96,9 @@ public class AddBookActivity extends AppCompatActivity {
                 Book toUploadBook = new Book(isbnView.getText().toString(), titleView.getText().toString(), authorView.getText().toString(), genreView.getText().toString());
 
                 String userEmail = getIntent().getStringExtra("userAuth");
-                UploadCompleteListener mCompleteListener = new UploadCompleteListener() {
+                MyCompleteListener mCompleteListener = new MyCompleteListener() {
                     @Override
-                    public void onSuccess() {
+                    public void onSuccess(Bitmap bm) {
                         Toast.makeText(AddBookActivity.this, "Your book has been uploaded successfully!", Toast.LENGTH_LONG).show();
                         for (Uri uri: picturesList){
                             try {
