@@ -115,7 +115,8 @@ public class MyUploadService extends MyBaseTaskService {
                             // Get the public download URL
                             Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
 
-                            updateBookPictures(downloadUri, mBookRef);
+                            String imageUri = downloadUri.getLastPathSegment();
+                            updateBookPictures(imageUri, mBookRef);
 
                             // [START_EXCLUDE]
                             broadcastUploadFinished(downloadUri, fileUri);
@@ -209,7 +210,7 @@ public class MyUploadService extends MyBaseTaskService {
         manager.notify(NOTIF_ID_DOWNLOAD, builder.build());
     }
 
-    private void updateBookPictures(Uri uri, String bookRef){
+    private void updateBookPictures(String uri, String bookRef){
         BookController.updateBookPicture(uri, bookRef);
     }
 

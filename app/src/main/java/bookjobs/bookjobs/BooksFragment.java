@@ -1,6 +1,8 @@
 package bookjobs.bookjobs;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,9 +35,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StreamDownloadTask;
 
 import org.w3c.dom.Comment;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,6 +59,10 @@ public class BooksFragment extends Fragment {
     private DatabaseReference mCurrentUserReference;
     private StorageReference mStorageReference;
 
+    private final String TAG = "GetPost:";
+    ArrayList<ArrayList<String>> imagesList = new ArrayList<>();
+    LinearLayout imagesView;
+
     // CHEE TENG ATTRIBUTES
     TextView bookTitle;
     TextView author, bookISBN, bookGenre;
@@ -59,6 +70,7 @@ public class BooksFragment extends Fragment {
     ImageButton btnCross;
     ImageView ivbook;
     ArrayList<Book> bookArrayList;
+
     int currentBookIndex = -1;
 
     int clickcounter = 0;
@@ -83,6 +95,8 @@ public class BooksFragment extends Fragment {
 
         mCurrentUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users");
+
+        imagesView = (LinearLayout) rootView.findViewById(R.id.fragment_books_images_linear_layout);
 
         // CHEE TENG CODE
         ivbook = (ImageView)rootView.findViewById(R.id.ivBook);
@@ -171,18 +185,46 @@ public class BooksFragment extends Fragment {
 
         if(bookArrayList.size()>0)
         {
+            imagesView.removeAllViews();
             currentBookIndex = random.nextInt(bookArrayList.size());
             newBook = bookArrayList.get(currentBookIndex);
             author.setText(newBook.getmAuthor());
             bookTitle.setText(newBook.getmTitle());
             bookGenre.setText(newBook.getmGenre());
             bookISBN.setText(newBook.getmISBN());
+
+            // get the image storage reference
+            mStorageReference = FirebaseStorage.getInstance().getReference();
+
+            ArrayList<String> mImages;
+            mImages = imagesList.get(currentBookIndex);
+
+            final LayoutInflater mLI = getActivity().getLayoutInflater();
+            final InputStream[] inputStreams = new InputStream[mImages.size()];
+            for (int i = 0; i < mImages.size(); i++){
+                String image = mImages.get(i);
+                final int finalI = i;
+                mStorageReference.child(image).getStream(new StreamDownloadTask.StreamProcessor() {
+                    @Override
+                    public void doInBackground(StreamDownloadTask.TaskSnapshot taskSnapshot, InputStream inputStream) throws IOException {
+                        inputStreams[finalI] = inputStream;
+                    }
+                });
+            }
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    for (InputStream is : inputStreams){
+                        ImageView iv = (ImageView) mLI.inflate(R.layout.image_view_in_scroll_view, null, true);
+                        iv.setImageBitmap(BitmapFactory.decodeStream(is));
+                        imagesView.addView(iv);
+                    }
+                }
+            });
         }
-
-
-
-
     }
+
+
 
     public boolean getPost()
     {
@@ -198,20 +240,15 @@ public class BooksFragment extends Fragment {
 
                     Book book = child.getValue(Book.class);
                     bookArrayList.add(book);
-                    Log.d("TAG",""+child.getValue());
-//
-//                    mStorageReference.child("photos/1920.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                        @Override
-//                        public void onSuccess(Uri uri) {
-//                            // Got the download URL for 'users/me/profile.png'
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception exception) {
-//                            // Handle any errors
-//                        }
-//                    });
+                    Log.d(TAG,""+child.getValue());
 
+                    ArrayList<String> mImages = new ArrayList<>();
+                    DataSnapshot photos = child.child("photos");
+                    Log.d(TAG, "Number of images in this photo: " + String.valueOf(photos.getChildrenCount()));
+                    for (DataSnapshot imageURL : photos.getChildren()){
+                        mImages.add((String) imageURL.getValue());
+                    }
+                    imagesList.add(mImages);
                 }
             }
 
