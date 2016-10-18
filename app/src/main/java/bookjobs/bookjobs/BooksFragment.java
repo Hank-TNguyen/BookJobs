@@ -207,7 +207,19 @@ public class BooksFragment extends Fragment {
                 mStorageReference.child(image).getStream(new StreamDownloadTask.StreamProcessor() {
                     @Override
                     public void doInBackground(StreamDownloadTask.TaskSnapshot taskSnapshot, InputStream inputStream) throws IOException {
-                        inputStreams[finalI] = inputStream;
+                        inputStream.close();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<StreamDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(StreamDownloadTask.TaskSnapshot taskSnapshot) {
+                        Log.d(TAG, "download:SUCCESS");
+                        inputStreams[finalI] = taskSnapshot.getStream();
+                        Log.d("DEBUG GETPOST", inputStreams[finalI].toString());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "download:FAIL: " +e.getMessage());
                     }
                 });
             }
