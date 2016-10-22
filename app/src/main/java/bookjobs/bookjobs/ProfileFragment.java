@@ -67,19 +67,12 @@ public class ProfileFragment extends Fragment {
         foundBooks = new ArrayList<Book>();
         ctx=getActivity().getApplicationContext();
         List<Book> bookList = new ArrayList<Book>();
-//        bookList.add(new Book("asd", "PS I Love You", "Cecelia Ahern", "Love", "profilebook", "dummy", 42, true));
-//        bookList.add(new Book("asd", "The Da Vinci Code", "Dan Brown", "Mystery", "davinci","dummmy",  65, true));
-//        bookList.add(new Book("asd", "For One More Day", "Mitch Albom", "Novel", "book7","dummy", 28, true));
-//        bookList.add(new Book("asd", "The Girl's Playground", "Alexandria Jackson", "Novel", "book9","dummy", 5, false));
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mBooksDatabase = mDatabase.child("books");
         mCurrentUser = mDatabase.child("users");
         lvBook = (ListView)rootView.findViewById(R.id.lvListings);
         getBooks();
-
-
-
 
         ImageButton addNewListing = (ImageButton)rootView.findViewById(R.id.newListingbtn);
         addNewListing.setOnClickListener(new View.OnClickListener() {
@@ -94,13 +87,9 @@ public class ProfileFragment extends Fragment {
 
     private void showBooks()
     {
-
-
             lvBook.setAdapter(new MyListingsAdapter(ctx, R.layout.my_listing_row, foundBooks));
 
-
             lvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -159,10 +148,6 @@ public class ProfileFragment extends Fragment {
                                        //Found
                                        HashMap<String, Object> bookHashMap = (HashMap<String, Object>) book.getValue();
 
-//                                       bookHashMap.get("noOfLikes");
-//                                       bookHashMap.get("availability");
-
-
                                        foundBooks.add(new Book((String)bookHashMap.get("mISBN"),(String)bookHashMap.get("mTitle"),(String)bookHashMap.get("mAuthor"),(String)bookHashMap.get("mGenre")));
 
                                    }catch (Exception e)
@@ -185,11 +170,7 @@ public class ProfileFragment extends Fragment {
 
                         }
                     });
-
-
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("PROFILEFragment", "Failed to reach the server");

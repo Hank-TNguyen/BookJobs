@@ -71,11 +71,11 @@ public class BookController {
                         if (databaseError != null) {
                             Log.e(DBTAG, "Data could not be saved. " + databaseError.getMessage());
                         } else {
-                            Log.d(DBTAG, "Data saved successfully.");
                             // update the 'owns' list in user's data
                             bookRef = newBookRef.getKey();
                             onResult(bookRef);
                             Log.d(DBTAG, "Data saved successfully. bookRef = " + bookRef);
+                            completeListener.onSuccess();
                             updateOwnerCollection(bookRef);
                             //TODO: we can use this to count how many of the same books an user has
                         }

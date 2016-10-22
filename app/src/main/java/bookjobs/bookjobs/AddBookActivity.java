@@ -98,7 +98,7 @@ public class AddBookActivity extends AppCompatActivity {
                 String userEmail = getIntent().getStringExtra("userAuth");
                 MyCompleteListener mCompleteListener = new MyCompleteListener() {
                     @Override
-                    public void onSuccess(Bitmap bm) {
+                    public void onSuccess() {
                         Toast.makeText(AddBookActivity.this, "Your book has been uploaded successfully!", Toast.LENGTH_LONG).show();
                         for (Uri uri: picturesList){
                             try {
@@ -106,7 +106,6 @@ public class AddBookActivity extends AppCompatActivity {
                                         Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED));
                                 uploadFromUri(uri, uploadResult);
                             } catch (SecurityException e){
-
                                 Log.e("permission denied??", e.getMessage());
                             }
                         }
@@ -138,8 +137,6 @@ public class AddBookActivity extends AppCompatActivity {
 
         if(resultCode==RESULT_OK){
             if(requestCode==SELECT_MULTIPLE_PICTURE){
-                Log.d(LOG_TAG, "The requeste code is: " + String.valueOf(requestCode==SELECT_MULTIPLE_PICTURE));
-                Log.d(LOG_TAG, "Action type is: " + String.valueOf(data.getAction()));
                 if (Intent.ACTION_SEND_MULTIPLE == data.getAction()
                         && data.hasExtra(Intent.EXTRA_STREAM)) {
                     // retrieve a collection of selected images
@@ -154,6 +151,7 @@ public class AddBookActivity extends AppCompatActivity {
                 }
                 else if (data.getAction()=="inline-data"){
                     try {
+                        Log.d(LOG_TAG, "Image added: " + data.getData().getLastPathSegment());
                         picturesList.add(data.getData());
                         inflatePicture((Bitmap) data.getExtras().get("data"));
                     } catch (IOException e) {

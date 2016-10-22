@@ -16,7 +16,7 @@ import bookjobs.bookjobs.MyCompleteListener;
 public class ImageDownloader extends AsyncTask<Void,Void,Void> {
 
     private URL mUrl;
-    private MyCompleteListener mCL;
+    private MyImageDownloadListener mCL;
     private Bitmap bm;
     private final String TAG = "ImageDownloader";
 
@@ -24,7 +24,7 @@ public class ImageDownloader extends AsyncTask<Void,Void,Void> {
         this.mUrl = url;
     }
 
-    public void setCompleteListener(MyCompleteListener mCL) {
+    public void setCompleteListener(MyImageDownloadListener mCL) {
         this.mCL = mCL;
     }
 
@@ -42,10 +42,5 @@ public class ImageDownloader extends AsyncTask<Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         mCL.onSuccess(bm);
-        if (bm==null)
-            Log.d(TAG, "damn shit ");
-        else
-            Log.d(TAG, "damn good");
-
     }
 }

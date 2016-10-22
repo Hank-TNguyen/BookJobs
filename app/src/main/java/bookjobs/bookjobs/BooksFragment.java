@@ -58,6 +58,7 @@ import java.util.Random;
 
 import bookjobs.bookjobs.ImageUploader.FirebaseImageLoader;
 import bookjobs.bookjobs.ImageUploader.ImageDownloader;
+import bookjobs.bookjobs.ImageUploader.MyImageDownloadListener;
 
 /**
  * Created by Aliasgar on 5/9/16.
@@ -85,10 +86,6 @@ public class BooksFragment extends Fragment {
     ArrayList<Book> bookArrayList;
 
     int currentBookIndex = -1;
-
-    int clickcounter = 0;
-
-
 
     public BooksFragment() {
 
@@ -165,7 +162,6 @@ public class BooksFragment extends Fragment {
                     {
                         Book book = bookArrayList.get(currentBookIndex);
                         dataSnapshot.child(userRef).child("wants").child(book.getmISBN()).getRef().setValue(1);
-
                     }
                 }
 
@@ -211,14 +207,16 @@ public class BooksFragment extends Fragment {
             // get the image storage reference
             mStorageReference = FirebaseStorage.getInstance().getReference();
 
-            final ArrayList<String> mImages;
+            ArrayList<String> mImages;
             mImages = imagesList.get(currentBookIndex);
+
 
             final LayoutInflater mLI = getActivity().getLayoutInflater();
 
             bitmaps = new Bitmap[mImages.size()];
             for (int i = 0; i < mImages.size(); i++){
                 String image = mImages.get(i);
+                Log.d(TAG, "images are: " + mImages.toString());
                 final int finalI = i;
 
                 mStorageReference.child(image)
@@ -234,7 +232,7 @@ public class BooksFragment extends Fragment {
                         }
 
                         ImageDownloader IDTask = new ImageDownloader(url);
-                        IDTask.setCompleteListener(new MyCompleteListener() {
+                        IDTask.setCompleteListener(new MyImageDownloadListener() {
                             @Override
                             public void onSuccess(Bitmap bm) {
                                 bitmaps[finalI] = bm;
@@ -254,7 +252,6 @@ public class BooksFragment extends Fragment {
                             }
                         });
                         IDTask.execute();
-
                     }
                 });
 
@@ -284,6 +281,7 @@ public class BooksFragment extends Fragment {
                     ArrayList<String> mImages = new ArrayList<>();
                     DataSnapshot photos = child.child("photos");
                     Log.d(TAG, "Number of images in this photo: " + String.valueOf(photos.getChildrenCount()));
+
                     for (DataSnapshot imageURL : photos.getChildren()){
                         mImages.add((String) imageURL.getValue());
                     }

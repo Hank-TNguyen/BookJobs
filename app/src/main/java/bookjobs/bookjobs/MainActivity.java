@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         PACKAGE_NAME = getApplicationContext().getPackageName();
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -78,16 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_activity_add_book);
-                fab.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                                    Intent addBook = new Intent(MainActivity.this, AddBookActivity.class);
-                                    addBook.putExtra("userAuth", getIntent().getStringExtra("userAuth"));
-                                    startActivity(addBook);
-                        }
-                    });
     }
 
 
