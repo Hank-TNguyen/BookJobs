@@ -35,7 +35,6 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bookjobs.bookjobs.R.id.imageView;
 
 public class MainActivity extends AppCompatActivity {
 

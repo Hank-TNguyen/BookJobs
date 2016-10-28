@@ -1,6 +1,8 @@
 package bookjobs.bookjobs;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Chee Teng on 10/10/2016.
@@ -34,6 +37,17 @@ public class MyListingsAdapter extends ArrayAdapter<Book> {
     @Override
     public View getView (int position, View convertView, ViewGroup parent ) {
         convertView = (RelativeLayout) inflater.inflate( resource, null );
+
+//        AssetManager am = context.getAssets();
+//        Typeface typeface_josephin = Typeface.createFromAsset(am,
+//                String.format(Locale.US, "fonts/%s", "Josephin.ttf"));
+//
+//        Typeface typeface_exo = Typeface.createFromAsset(am,
+//                String.format(Locale.US, "fonts/%s", "Exo.ttf"));
+//
+//        Typeface typeface_engagement = Typeface.createFromAsset(am,
+//                String.format(Locale.US, "fonts/%s", "Engagement.ttf"));
+
         Book book = getItem( position );
 
         TextView bookTitle = (TextView) convertView.findViewById(R.id.bookTitle);
@@ -52,16 +66,15 @@ public class MyListingsAdapter extends ArrayAdapter<Book> {
         TextView noOfLikes = (TextView) convertView.findViewById(R.id.noOfLikes);
         noOfLikes.setText(Integer.toString(book.getNoOfLikes()));
 
-        ImageView heartPic = (ImageView) convertView.findViewById(R.id.imageView7);
-        String hearturl = "drawable/heartbtn";
-        int imageResource1 = context.getResources().getIdentifier(hearturl, null, context.getPackageName());
-        Drawable image1 = context.getResources().getDrawable(imageResource1);
-        heartPic.setImageDrawable(image1);
+        TextView name = (TextView) convertView.findViewById(R.id.tvName);
+        TextView address = (TextView) convertView.findViewById(R.id.tvaddress);
 
-        TextView availability = (TextView) convertView.findViewById(R.id.tvNotAvailable);
-        if (!book.isAvailability()){
-            availability.setVisibility(View.VISIBLE);
-        }
+//        name.setTypeface(typeface_engagement);
+//        address.setTypeface(typeface_josephin);
+//        bookTitle.setTypeface(typeface_exo);
+//        bookAuthor.setTypeface(typeface_josephin);
+
+
 
         return convertView;
     }

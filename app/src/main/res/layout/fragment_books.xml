@@ -73,10 +73,9 @@
     <ImageButton
         android:layout_width="300px"
         android:layout_height="300px"
-        app:srcCompat="@drawable/heartbtn"
+        android:src="@drawable/love"
         android:id="@+id/btnHeart"
         android:adjustViewBounds="true"
-        android:background="@android:color/white"
         android:padding="1dp"
         android:scaleType="fitCenter"
         android:layout_alignBottom="@+id/tvBookISBN"

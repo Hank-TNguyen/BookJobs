@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -43,6 +45,11 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_signup);
 
         // set up the wings
@@ -51,6 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
         mPasswordView = (EditText) findViewById(R.id.signup_password);
         mAddressView = (EditText) findViewById(R.id.signup_address);
         mSignUpButton = (Button) findViewById(R.id.signup_submit_button);
+
 
         // set up onclick listener
         mSignUpButton.setOnClickListener(new View.OnClickListener() {

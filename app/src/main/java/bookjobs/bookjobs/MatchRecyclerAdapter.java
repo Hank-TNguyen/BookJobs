@@ -3,6 +3,8 @@ package bookjobs.bookjobs;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Aliasgar on 7/10/16.
@@ -29,7 +32,10 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
 
     private List<Match> matchList;
     private Context context;
-
+    AssetManager am;
+    Typeface typeface_josephin;
+    Typeface typeface_exo;
+    Typeface typeface_engagement;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView title, author, genre,distance;
@@ -45,8 +51,6 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
             distance = (TextView) view.findViewById(R.id.distance);
             cover = (ImageView) view.findViewById(R.id.cover);
             cardView = (CardView) view.findViewById(R.id.card_view);
-
-
         }
 
 
@@ -56,6 +60,16 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
     public MatchRecyclerAdapter(List<Match> matchList, Context context) {
         this.matchList = matchList;
         this.context = context;
+         am = context.getAssets();
+         typeface_josephin = Typeface.createFromAsset(am,
+                String.format(Locale.US, "fonts/%s", "Josephin.ttf"));
+
+         typeface_exo = Typeface.createFromAsset(am,
+                String.format(Locale.US, "fonts/%s", "Exo.ttf"));
+
+         typeface_engagement = Typeface.createFromAsset(am,
+                String.format(Locale.US, "fonts/%s", "Engagement.ttf"));
+
     }
 
     @Override
@@ -73,6 +87,12 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
         holder.genre.setText(match.getBook().getmGenre());
         holder.author.setText(match.getBook().getmAuthor());
         holder.distance.setText(""+match.getDistance()+" km");
+
+        holder.title.setTypeface(typeface_exo);
+        holder.author.setTypeface(typeface_engagement);
+        holder.genre.setTypeface(typeface_josephin);
+
+
 
 
     }

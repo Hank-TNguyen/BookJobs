@@ -1,14 +1,17 @@
 package bookjobs.bookjobs;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +57,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import bookjobs.bookjobs.ImageUploader.FirebaseImageLoader;
@@ -80,8 +84,8 @@ public class BooksFragment extends Fragment {
     // CHEE TENG ATTRIBUTES
     TextView bookTitle;
     TextView author, bookISBN, bookGenre;
-    ImageButton btnHeart;
-    ImageButton btnCross;
+    FloatingActionButton btnHeart;
+    FloatingActionButton btnCross;
     ImageView ivbook;
     ArrayList<Book> bookArrayList;
 
@@ -99,8 +103,14 @@ public class BooksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_books, container,
+        View rootView = inflater.inflate(R.layout.fragment_books_ui, container,
                 false);
+        AssetManager am = getActivity().getAssets();
+        Typeface typeface_josephin = Typeface.createFromAsset(am,
+                String.format(Locale.US, "fonts/%s", "Josephin.ttf"));
+
+        Typeface typeface_exo = Typeface.createFromAsset(am,
+                String.format(Locale.US, "fonts/%s", "Exo.ttf"));
 
         mPostReference = FirebaseDatabase.getInstance().getReference()
                 .child("books");
@@ -112,12 +122,17 @@ public class BooksFragment extends Fragment {
 
         // CHEE TENG CODE
         ivbook = (ImageView)rootView.findViewById(R.id.ivBook);
-        btnHeart = (ImageButton)rootView.findViewById(R.id.btnHeart);
-        btnCross = (ImageButton)rootView.findViewById(R.id.btnCross);
+        btnHeart = (FloatingActionButton) rootView.findViewById(R.id.btnHeart);
+        btnCross = (FloatingActionButton) rootView.findViewById(R.id.btnCross);
         author = (TextView)rootView.findViewById(R.id.tvBookAuthor);
         bookTitle = (TextView)rootView.findViewById(R.id.tvBookTitle);
         bookISBN = (TextView)rootView.findViewById(R.id.tvBookISBN);
         bookGenre = (TextView)rootView.findViewById(R.id.tvBookGenre);
+
+        bookTitle.setTypeface(typeface_exo);
+        author.setTypeface(typeface_josephin);
+        bookGenre.setTypeface(typeface_josephin);
+        bookISBN.setTypeface(typeface_josephin);
 
         bookArrayList = new ArrayList<>();
 
@@ -134,12 +149,14 @@ public class BooksFragment extends Fragment {
             }
         });
 
-
         final List<Book> bookList = new ArrayList<>();
 
 
         if(bookList.size()<=0)
             getPost();
+
+        //Load new book on launch
+        loadNewBook();
 
         return rootView;
     }

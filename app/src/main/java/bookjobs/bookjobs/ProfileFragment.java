@@ -2,6 +2,8 @@ package bookjobs.bookjobs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -63,6 +66,7 @@ public class ProfileFragment extends Fragment {
                 false);
 
 
+
         bookIDs = new ArrayList<String>();
         foundBooks = new ArrayList<Book>();
         ctx=getActivity().getApplicationContext();
@@ -87,7 +91,7 @@ public class ProfileFragment extends Fragment {
 
     private void showBooks()
     {
-            lvBook.setAdapter(new MyListingsAdapter(ctx, R.layout.my_listing_row, foundBooks));
+            lvBook.setAdapter(new MyListingsAdapter(getContext(), R.layout.my_listing_row, foundBooks));
 
             lvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
