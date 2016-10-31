@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,6 +51,8 @@ public class ProfileFragment extends Fragment {
     private static DatabaseReference mBooksDatabase;
     ArrayList<String> bookIDs;
     ArrayList<Book> foundBooks;
+    private TextView matchTV;
+    private ImageView matchICON;
 
     public ProfileFragment() {
 
@@ -76,6 +80,9 @@ public class ProfileFragment extends Fragment {
         mBooksDatabase = mDatabase.child("books");
         mCurrentUser = mDatabase.child("users");
         lvBook = (ListView)rootView.findViewById(R.id.lvListings);
+        matchICON = (ImageView) rootView.findViewById(R.id.match_icon);
+        matchTV = (TextView) rootView.findViewById(R.id.match_tv);
+
         getBooks();
 
         ImageButton addNewListing = (ImageButton)rootView.findViewById(R.id.newListingbtn);
@@ -119,21 +126,19 @@ public class ProfileFragment extends Fragment {
                 HashMap<String, Object> user = (HashMap<String, Object>) entry.getValue();
 
                 Iterator it = user.entrySet().iterator();
-                it.next();
-                it.next();
-                it.next();
-                HashMap.Entry owns = (HashMap.Entry)it.next();
-                HashMap<String, Object> ownsValue = (HashMap<String, Object>) owns.getValue();
 
-                it = ownsValue.entrySet().iterator();
-                while(it.hasNext())
-                {
-                    HashMap.Entry book = (HashMap.Entry)it.next();
-                    bookIDs.add((String) book.getKey());
+                while (it.hasNext()) {
+                    HashMap.Entry book = (HashMap.Entry) it.next();
+                    if ((book.getKey()).equals("owns")) {
+                        HashMap<String, Object> bookSpecific = (HashMap<String, Object>) book.getValue();
+                        Iterator itBook = bookSpecific.entrySet().iterator();
+                        while (itBook.hasNext()) {
+                            HashMap.Entry bookFinal = (HashMap.Entry) itBook.next();
+                            bookIDs.add((String) bookFinal.getKey());
+                        }
+
+                    }
                 }
-
-
-
 
                     mBooksDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -165,8 +170,18 @@ public class ProfileFragment extends Fragment {
                             }
                             if(foundBooks.size()>0)
                             {
+                                matchICON.setVisibility(View.GONE);
+                                matchTV.setVisibility(View.GONE);
+                                lvBook.setVisibility(View.VISIBLE);
                                 showBooks();
                             }
+                            else
+                            {
+                                matchICON.setVisibility(View.VISIBLE);
+                                matchTV.setVisibility(View.VISIBLE);
+                                lvBook.setVisibility(View.GONE);
+                            }
+
                         }
 
                         @Override

@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +43,8 @@ public class MatchesFragment extends Fragment {
     ArrayList<Book> booksMatch;
     private DatabaseReference mCurrentUser;
     private DatabaseReference mCurrentUserBooks;
+    private TextView matchTV;
+    private ImageView matchICON;
 
     public MatchesFragment() {
 
@@ -58,6 +62,8 @@ public class MatchesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_matches, container,
                 false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        matchICON = (ImageView) rootView.findViewById(R.id.match_icon);
+        matchTV = (TextView) rootView.findViewById(R.id.match_tv);
 
         Book book = new Book("1234", "Life of Pi", "Mr. Richard Williams", "Philosophy");
         User user1 = new User("John", "john@gmail.com", "Loves travelling", "Singapore", new Address(10.12, 17.32));
@@ -228,7 +234,16 @@ public class MatchesFragment extends Fragment {
                                 }
 
                                 if (foundMatch.size() > 0) {
+                                    matchICON.setVisibility(View.GONE);
+                                    matchTV.setVisibility(View.GONE);
+                                    recyclerView.setVisibility(View.VISIBLE);
                                     showMatches();
+                                }
+                                else
+                                {
+                                    matchICON.setVisibility(View.VISIBLE);
+                                    matchTV.setVisibility(View.VISIBLE);
+                                    recyclerView.setVisibility(View.GONE);
                                 }
 
                             }

@@ -116,7 +116,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
-            android:id="@+id/btnCross"
+            android:id="@+id/btnHeart"
+
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="@dimen/fab_margin"
@@ -124,7 +125,7 @@
 
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btnHeart"
+            android:id="@+id/btnCross"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

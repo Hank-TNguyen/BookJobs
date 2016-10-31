@@ -81,4 +81,22 @@
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add_white_24dp" />
+
+    <ImageView
+        android:id="@+id/match_icon"
+        android:layout_width="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_height="100dp" />
+    <TextView
+        android:id="@+id/match_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/match_icon"
+        android:text="NO MATCHES YET\n\n\nUPLOAD MORE BOOKS \nTO FIND A MATCH"/>
 </RelativeLayout>

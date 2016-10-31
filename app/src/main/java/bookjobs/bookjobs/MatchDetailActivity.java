@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Random;
+
 /**
  * Created by Aliasgar on 9/10/16.
  */
@@ -71,9 +73,11 @@ public class MatchDetailActivity extends AppCompatActivity {
         //TODO init cover image from server/ db
 
 
+        Random random = new Random();
+        requester_distance.setText(random.nextInt(20 + 1) +" km");
+
         requester_name.setText(match.getUserWants().getName());
         requester_address.setText(match.getUserWants().getAddress());
-        requester_distance.setText(""+match.getDistance());
         requester_bio.setText(match.getUserWants().getBio());
 
 

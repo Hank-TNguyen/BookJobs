@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 /**
  * Created by Aliasgar on 7/10/16.
@@ -38,7 +39,7 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
     Typeface typeface_engagement;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView title, author, genre,distance;
+        public TextView title, author, genre;
         public ImageView cover;
         public CardView cardView;
 
@@ -48,7 +49,6 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
             title = (TextView) view.findViewById(R.id.title);
             genre = (TextView) view.findViewById(R.id.genre);
             author = (TextView) view.findViewById(R.id.author);
-            distance = (TextView) view.findViewById(R.id.distance);
             cover = (ImageView) view.findViewById(R.id.cover);
             cardView = (CardView) view.findViewById(R.id.card_view);
         }
@@ -86,8 +86,6 @@ public class MatchRecyclerAdapter extends RecyclerView.Adapter<MatchRecyclerAdap
         holder.title.setText(match.getBook().getmTitle());
         holder.genre.setText(match.getBook().getmGenre());
         holder.author.setText(match.getBook().getmAuthor());
-        holder.distance.setText(""+match.getDistance()+" km");
-
         holder.title.setTypeface(typeface_exo);
         holder.author.setTypeface(typeface_engagement);
         holder.genre.setTypeface(typeface_josephin);

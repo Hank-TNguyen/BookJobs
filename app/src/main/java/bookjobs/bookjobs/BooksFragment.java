@@ -167,7 +167,7 @@ public class BooksFragment extends Fragment {
         {
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+            final Book book = bookArrayList.get(currentBookIndex);
             Query query = mCurrentUserReference.orderByChild("email").equalTo(user.getEmail());
 
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -175,9 +175,9 @@ public class BooksFragment extends Fragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String value = dataSnapshot.getValue().toString();
                     String userRef = value.substring(1, value.indexOf('='));
-                    if(bookArrayList.size()>0)
+                    if(book!=null)
                     {
-                        Book book = bookArrayList.get(currentBookIndex);
+
                         dataSnapshot.child(userRef).child("wants").child(book.getmISBN()).getRef().setValue(1);
                     }
                 }
@@ -191,7 +191,7 @@ public class BooksFragment extends Fragment {
         }
         else
         {
-            Toast.makeText(getContext(),"Illegal click - Please report", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No More Books To Show", Toast.LENGTH_SHORT).show();
         }
 
 
